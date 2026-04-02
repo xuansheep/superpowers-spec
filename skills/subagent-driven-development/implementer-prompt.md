@@ -16,6 +16,14 @@ Task tool (general-purpose):
 
     [Scene-setting: where this fits, dependencies, architectural context]
 
+    ## Project Spec Indexes Read
+
+    [PROJECT_SPEC_INDEXES_FOUND]
+
+    ## Project Rules Summary
+
+    [PROJECT_RULES_SUMMARY]
+
     ## Before You Begin
 
     If you have questions about:
@@ -23,6 +31,7 @@ Task tool (general-purpose):
     - The approach or implementation strategy
     - Dependencies or assumptions
     - Anything unclear in the task description
+    - Any conflict between the task and the project rules summary
 
     **Ask them now.** Raise any concerns before starting work.
 
@@ -30,11 +39,12 @@ Task tool (general-purpose):
 
     Once you're clear on requirements:
     1. Implement exactly what the task specifies
-    2. Write tests (following TDD if task says to)
-    3. Verify implementation works
-    4. Commit your work
-    5. Self-review (see below)
-    6. Report back
+    2. Follow the project rules summary while implementing
+    3. Write tests (following TDD if task says to)
+    4. Verify implementation works
+    5. Commit your work
+    6. Self-review (see below)
+    7. Report back
 
     Work from: [directory]
 
@@ -79,6 +89,10 @@ Task tool (general-purpose):
     - Did I fully implement everything in the spec?
     - Did I miss any requirements?
     - Are there edge cases I didn't handle?
+
+    **Project Rules:**
+    - Did I follow the project rules summary?
+    - Did I add behavior or structure that conflicts with the repository rules?
 
     **Quality:**
     - Is this my best work?

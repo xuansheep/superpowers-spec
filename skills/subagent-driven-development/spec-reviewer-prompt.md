@@ -2,7 +2,7 @@
 
 Use this template when dispatching a spec compliance reviewer subagent.
 
-**Purpose:** Verify implementer built what was requested (nothing more, nothing less)
+**Purpose:** Verify implementer built what was requested and did not violate applicable project rules.
 
 ```
 Task tool (general-purpose):
@@ -17,6 +17,14 @@ Task tool (general-purpose):
     ## What Implementer Claims They Built
 
     [From implementer's report]
+
+    ## Project Spec Indexes Read
+
+    [PROJECT_SPEC_INDEXES_FOUND]
+
+    ## Project Rules Summary
+
+    [PROJECT_RULES_SUMMARY]
 
     ## CRITICAL: Do Not Trust the Report
 
@@ -33,6 +41,7 @@ Task tool (general-purpose):
     - Compare actual implementation to requirements line by line
     - Check for missing pieces they claimed to implement
     - Look for extra features they didn't mention
+    - Check whether the implementation conflicts with the project rules summary
 
     ## Your Job
 
@@ -53,9 +62,13 @@ Task tool (general-purpose):
     - Did they solve the wrong problem?
     - Did they implement the right feature but wrong way?
 
+    **Project rules:**
+    - Did they violate any applicable rule from the project rules summary?
+    - If project spec coverage is partial, is that limitation called out explicitly?
+
     **Verify by reading code, not by trusting report.**
 
     Report:
     - ✅ Spec compliant (if everything matches after code inspection)
-    - ❌ Issues found: [list specifically what's missing or extra, with file:line references]
+    - ❌ Issues found: [list specifically what's missing, extra, or rule-breaking, with file:line references]
 ```

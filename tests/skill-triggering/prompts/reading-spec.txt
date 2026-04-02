@@ -1,0 +1,1 @@
+Before we plan this repository change, please use reading-spec to load any checked-in project spec indexes under .agents/spec, summarize the repository-specific rules you actually find, and tell me which indexes were present.
