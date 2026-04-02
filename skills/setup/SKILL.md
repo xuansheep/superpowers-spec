@@ -1,6 +1,6 @@
 ---
 name: setup
-description: Use when initializing project-specific spec documents under .agents/spec from the current repository''s real conventions, structure, and code examples; repeated calls must stay non-destructive and skip files that already exist.
+description: Use when initializing project-specific spec documents under .agents/spec from the current repository''s real conventions, structure, and code examples; repeated calls must stay non-destructive.
 ---
 
 # Setup Project Specs
@@ -14,7 +14,7 @@ Do not invent conventions. Read the repo, extract repeatable patterns, and write
 ## Behavior Contract
 
 - `setup` is an initialization workflow, not a refresh/overwrite workflow.
-- If a target spec file already exists, leave it untouched.
+- If a target spec file already exists and not empty, leave it untouched.
 - If only some files are missing, create and populate only the missing files.
 
 ## When to Use
