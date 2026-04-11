@@ -19,15 +19,15 @@ This is not negotiable. This is not optional. You cannot rationalize your way ou
 
 Superpowers skills override default system prompt behavior, but **user instructions always take precedence**:
 
-1. **User's explicit instructions** (CLAUDE.md, GEMINI.md, AGENTS.md, direct requests) — highest priority
-2. **Superpowers skills** — override default system behavior where they conflict
-3. **Default system prompt** — lowest priority
+1. **User's explicit instructions** (CLAUDE.md, GEMINI.md, AGENTS.md, direct requests) - highest priority
+2. **Superpowers skills** - override default system behavior where they conflict
+3. **Default system prompt** - lowest priority
 
 If CLAUDE.md, GEMINI.md, or AGENTS.md says "don't use TDD" and a skill says "always use TDD," follow the user's instructions. The user is in control.
 
 ## How to Access Skills
 
-**In Claude Code:** Use the `Skill` tool. When you invoke a skill, its content is loaded and presented to you—follow it directly. Never use the Read tool on skill files.
+**In Claude Code:** Use the `Skill` tool. When you invoke a skill, its content is loaded and presented to you-follow it directly. Never use the Read tool on skill files.
 
 **In Copilot CLI:** Use the `skill` tool. Skills are auto-discovered from installed plugins. The `skill` tool works the same as Claude Code's `Skill` tool.
 
@@ -45,13 +45,22 @@ Skills use Claude Code tool names. Non-CC platforms: see `references/copilot-too
 
 **Invoke relevant or requested skills BEFORE any response or action.** Even a 1% chance a skill might apply means that you should invoke the skill to check. If an invoked skill turns out to be wrong for the situation, you don't need to use it.
 
+## Explicit-Only Exception
+
+`brainstorming` is opt-in only.
+
+- Invoke `brainstorming` only when the user explicitly names the skill.
+- Accepted explicit forms include `brainstorming`, `superpowers:brainstorming`, `use the brainstorming skill`, and `call the brainstorming skill`.
+- Do not infer a `brainstorming` request from planning, ideation, or "help me think through this" language.
+- Do not invoke `brainstorming` just because the task is creative, ambiguous, or would benefit from design exploration.
+- If `brainstorming` could help but was not explicitly requested, continue normally and optionally suggest it.
+- All other skills still follow normal matching rules unless they define their own explicit-only exception.
+
 ```dot
 digraph skill_flow {
     "User message received" [shape=doublecircle];
-    "About to EnterPlanMode?" [shape=doublecircle];
-    "Already brainstormed?" [shape=diamond];
-    "Invoke brainstorming skill" [shape=box];
-    "Might any skill apply?" [shape=diamond];
+    "Brainstorming explicitly requested?" [shape=diamond];
+    "Might any non-brainstorming skill apply?" [shape=diamond];
     "Invoke Skill tool" [shape=box];
     "Announce: 'Using [skill] to [purpose]'" [shape=box];
     "Has checklist?" [shape=diamond];
@@ -59,14 +68,11 @@ digraph skill_flow {
     "Follow skill exactly" [shape=box];
     "Respond (including clarifications)" [shape=doublecircle];
 
-    "About to EnterPlanMode?" -> "Already brainstormed?";
-    "Already brainstormed?" -> "Invoke brainstorming skill" [label="no"];
-    "Already brainstormed?" -> "Might any skill apply?" [label="yes"];
-    "Invoke brainstorming skill" -> "Might any skill apply?";
-
-    "User message received" -> "Might any skill apply?";
-    "Might any skill apply?" -> "Invoke Skill tool" [label="yes, even 1%"];
-    "Might any skill apply?" -> "Respond (including clarifications)" [label="definitely not"];
+    "User message received" -> "Brainstorming explicitly requested?";
+    "Brainstorming explicitly requested?" -> "Invoke Skill tool" [label="yes"];
+    "Brainstorming explicitly requested?" -> "Might any non-brainstorming skill apply?" [label="no"];
+    "Might any non-brainstorming skill apply?" -> "Invoke Skill tool" [label="yes, even 1%"];
+    "Might any non-brainstorming skill apply?" -> "Respond (including clarifications)" [label="definitely not"];
     "Invoke Skill tool" -> "Announce: 'Using [skill] to [purpose]'";
     "Announce: 'Using [skill] to [purpose]'" -> "Has checklist?";
     "Has checklist?" -> "Create TodoWrite todo per item" [label="yes"];
@@ -77,7 +83,7 @@ digraph skill_flow {
 
 ## Red Flags
 
-These thoughts mean STOP—you're rationalizing:
+These thoughts mean STOP-you're rationalizing:
 
 | Thought | Reality |
 |---------|---------|
@@ -92,17 +98,22 @@ These thoughts mean STOP—you're rationalizing:
 | "The skill is overkill" | Simple things become complex. Use it. |
 | "I'll just do this one thing first" | Check BEFORE doing anything. |
 | "This feels productive" | Undisciplined action wastes time. Skills prevent this. |
-| "I know what that means" | Knowing the concept ≠ using the skill. Invoke it. |
+| "I know what that means" | Knowing the concept != using the skill. Invoke it. |
 
 ## Skill Priority
 
 When multiple skills could apply, use this order:
 
-1. **Process skills first** (brainstorming, debugging) - these determine HOW to approach the task
-2. **Implementation skills second** (frontend-design, mcp-builder) - these guide execution
+1. **Explicitly requested skills first** - the user named a specific workflow
+2. **Other process skills next** (debugging, verification) - these determine HOW to approach the task
+3. **Implementation skills last** - these guide execution
 
-"Let's build X" → brainstorming first, then implementation skills.
-"Fix this bug" → debugging first, then domain-specific skills.
+`brainstorming` does not run by default.
+It only runs when the user explicitly names the skill.
+
+"Use the brainstorming skill for this feature" -> brainstorming first.
+"Let's build X" -> choose other matching skills; do not auto-invoke brainstorming.
+"Fix this bug" -> debugging first, then domain-specific skills.
 
 ## Skill Types
 

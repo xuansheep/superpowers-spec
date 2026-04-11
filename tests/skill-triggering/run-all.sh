@@ -48,6 +48,19 @@ for skill in "${SKILLS[@]}"; do
     echo ""
 done
 
+echo "Testing: brainstorming-not-explicit"
+if "$SCRIPT_DIR/run-negative-test.sh" "brainstorming" "$PROMPTS_DIR/brainstorming-implicit.txt" 3 2>&1 | tee /tmp/skill-test-brainstorming-negative.log; then
+    PASSED=$((PASSED + 1))
+    RESULTS+=("✅ brainstorming-not-explicit")
+else
+    FAILED=$((FAILED + 1))
+    RESULTS+=("❌ brainstorming-not-explicit")
+fi
+
+echo ""
+echo "---"
+echo ""
+
 echo ""
 echo "=== Summary ==="
 for result in "${RESULTS[@]}"; do

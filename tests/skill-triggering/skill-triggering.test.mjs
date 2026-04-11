@@ -18,4 +18,16 @@ for (const skill of ['reading-spec', 'setup']) {
   assert.match(promptContent, new RegExp(skill), `${skill} prompt should mention the skill by name`);
 }
 
+const negativePromptPath = path.join(promptsDir, 'brainstorming-implicit.txt');
+await fs.access(negativePromptPath);
+assert.match(runAllContent, /run-negative-test\.sh/, 'run-all.sh should execute the negative runner');
+assert.match(runAllContent, /brainstorming-not-explicit/, 'run-all.sh should report the brainstorming negative case');
+
+const negativePromptContent = await fs.readFile(negativePromptPath, 'utf8');
+assert.doesNotMatch(
+  negativePromptContent,
+  /brainstorming/i,
+  'negative brainstorming prompt should not mention the skill by name'
+);
+
 console.log('skill-triggering checks passed');
