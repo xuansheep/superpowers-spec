@@ -27,9 +27,9 @@ Do not invent conventions. Read the repo, extract repeatable patterns, and write
 
 1. Read the highest-signal sources first: `AGENTS.md`, `CLAUDE.md`, `README.md`, existing hook files, skill files, and relevant tests.
 2. Create the full spec tree skeleton:
-   - `node ./scripts/setup-spec/create-spec-tree.mjs`
+   - `node ~/.agents/skills/superpowers/setup/scripts/create-spec-tree.mjs`
 3. Populate only missing spec files from repository evidence:
-   - `node ./scripts/setup-spec/fill-spec.mjs`
+   - `node ~/.agents/skills/superpowers/setup/scripts/fill-spec.mjs`
 4. Review the generated summaries in:
    - `.agents/spec/backend/index.md`
    - `.agents/spec/frontend/index.md`
