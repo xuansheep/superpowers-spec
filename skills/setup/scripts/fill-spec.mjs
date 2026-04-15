@@ -1,20 +1,51 @@
 import path from 'node:path';
-import { setupSpec } from './lib.mjs';
+import readline from 'node:readline/promises';
+import { stdin as input, stdout as output } from 'node:process';
+import { runSetupFlow } from './fill-spec-lib.mjs';
+
+async function readPipedInput() {
+  return new Promise((resolve, reject) => {
+    let data = '';
+    input.setEncoding('utf8');
+    input.on('data', (chunk) => {
+      data += chunk;
+    });
+    input.on('end', () => resolve(data));
+    input.on('error', reject);
+  });
+}
+
+async function createAnswerReader() {
+  if (input.isTTY) {
+    const rl = readline.createInterface({ input, output });
+    return {
+      async ask(promptText) {
+        return await rl.question(promptText);
+      },
+      close() {
+        rl.close();
+      },
+    };
+  }
+
+  const answers = (await readPipedInput()).split(/\r?\n/);
+  return {
+    async ask(promptText) {
+      output.write(promptText);
+      return answers.shift() ?? '';
+    },
+    close() {},
+  };
+}
 
 const repoRoot = path.resolve(process.argv[2] ?? process.cwd());
-const { facts, created, written } = await setupSpec(repoRoot);
-const skippedCount = Object.values((await import('./lib.mjs')).SPEC_TREE)
-  .flat().length - written.length;
+const reader = await createAnswerReader();
 
-console.log(`Initialized .agents/spec for ${facts.projectName} at ${repoRoot}`);
-if (created.length === 0) {
-  console.log('No new spec files were created. Existing files were left untouched.');
-} else {
-  console.log('Created and populated files:');
-  for (const file of written) {
-    console.log(`- ${file}`);
-  }
-}
-if (skippedCount > 0) {
-  console.log(`Skipped existing files: ${skippedCount}`);
+try {
+  await runSetupFlow(repoRoot, {
+    ask: (promptText) => reader.ask(promptText),
+    write: (text) => output.write(text),
+  });
+} finally {
+  reader.close();
 }
