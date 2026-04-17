@@ -26,7 +26,7 @@ https://github.com/obra/superpowers/blob/main/README.md
    README 中的安装入口统一改为当前仓库地址 `xuansheep/my-superpowers`，避免继续把用户引向原仓库。
 
 2. **新增 spec 初始化相关能力**
-   本仓库增加了 `setup`、`reading-spec` 等 skills，以及配套脚本和测试，用于初始化和读取仓库级 spec 结构，方便在项目内建立更明确的工程约束。
+   本仓库增加了 `spec-init`（兼容旧别名 `setup`）、`spec-update`、`reading-spec` 等 skills，以及配套脚本和测试，用于初始化和读取仓库级 spec 结构，方便在项目内建立更明确的工程约束。
 
 3. **执行与评审流程有本地化调整**
    `executing-plans`、`requesting-code-review`、`subagent-driven-development` 等流程技能和提示词在本仓库中做了调整，以适配当前维护方式和工作流要求。
@@ -144,15 +144,18 @@ git clone https://github.com/xuansheep/my-superpowers.git
 - `finishing-a-development-branch`
 - `subagent-driven-development`
 
-### Spec 与初始化 / Spec & Setup
+### Spec 与初始化 / Spec Bootstrap
 
-- `setup`
+- `spec-init`
+- `spec-update`
+- `setup`（旧别名，兼容保留）
 - `reading-spec`
 
-### 元技能 / Meta
+## Spec 更新工作流
 
-- `writing-skills`
-- `using-superpowers`
+- `spec-update` 现在会先检查 `.agents/spec` 是否存在。
+- `spec-update` 会读取现有 spec 文件，结合相关时间窗内的已提交 git 变更，先生成一份更新计划供审核。
+- `spec-update` 的 CLI 不直接落盘更新；只有计划审核通过后，后续流程才允许执行保守更新。
 
 ## 理念
 

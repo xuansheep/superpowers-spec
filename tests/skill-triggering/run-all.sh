@@ -15,6 +15,8 @@ SKILLS=(
     "executing-plans"
     "requesting-code-review"
     "reading-spec"
+    "spec-init"
+    "spec-update"
     "setup"
 )
 

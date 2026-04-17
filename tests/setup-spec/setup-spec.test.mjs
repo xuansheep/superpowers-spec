@@ -1,14 +1,23 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
 import path from 'node:path';
+import {setTimeout as sleep} from 'node:timers/promises';
 import {pathToFileURL} from 'node:url';
 
 const repoRoot = process.cwd();
-const moduleUrl = pathToFileURL(path.join(repoRoot, 'skills/setup/scripts/lib.mjs')).href;
-const fillSpecLibUrl = pathToFileURL(path.join(repoRoot, 'skills/setup/scripts/fill-spec-lib.mjs')).href;
+const moduleUrl = pathToFileURL(path.join(repoRoot, 'skills', 'spec-init', 'scripts', 'lib.mjs')).href;
+const legacyModuleUrl = pathToFileURL(path.join(repoRoot, 'skills', 'setup', 'scripts', 'lib.mjs')).href;
+const fillSpecLibUrl = pathToFileURL(path.join(repoRoot, 'skills', 'spec-init', 'scripts', 'fill-spec-lib.mjs')).href;
+const legacyFillSpecLibUrl = pathToFileURL(path.join(repoRoot, 'skills', 'setup', 'scripts', 'fill-spec-lib.mjs')).href;
+const specUpdateLibUrl = pathToFileURL(path.join(repoRoot, 'skills', 'spec-update', 'scripts', 'update-spec-lib.mjs')).href;
 const mod = await import(moduleUrl);
+const legacyMod = await import(legacyModuleUrl);
 const {runSetupFlow} = await import(fillSpecLibUrl);
+const {runSetupFlow: legacyRunSetupFlow} = await import(legacyFillSpecLibUrl);
+const {planSpecUpdate, runSpecUpdate, applySpecUpdatePlan} = await import(specUpdateLibUrl);
 
+assert.equal(legacyMod.setupSpec, mod.setupSpec, 'legacy setup lib should re-export spec-init implementation');
+assert.equal(legacyRunSetupFlow, runSetupFlow, 'legacy setup fill flow should re-export spec-init implementation');
 assert.ok(mod.SPEC_TREE, 'SPEC_TREE export is required');
 assert.deepEqual(Object.keys(mod.SPEC_TREE).sort(), ['backend', 'frontend', 'guides']);
 
@@ -99,6 +108,7 @@ async function createFixtureRoot(name) {
   await fs.writeFile(path.join(fixtureRoot, 'tests', 'skill-triggering', 'run-test.sh'), 'echo test\n');
   await fs.mkdir(path.join(fixtureRoot, 'scripts'), {recursive: true});
   await fs.writeFile(path.join(fixtureRoot, 'scripts', 'bump-version.sh'), 'echo bump\n');
+  await fs.writeFile(path.join(fixtureRoot, 'src', 'main', 'java', 'com', 'example', 'app', 'App.java'), 'package com.example.app;\n\npublic class App {}\n');
 
   return fixtureRoot;
 }
@@ -178,6 +188,93 @@ assert.ok(updateResult.written.includes('.agents/spec/backend/code-style-guideli
 assert.match(updatedCodeStyle, /历史概览保留。/);
 assert.match(updatedCodeStyle, /## 命名规范\s+> 对于类、接口、注解、枚举的命名规范定义。/);
 assert.doesNotMatch(updatedCodeStyle, /## 格式规范/);
+
+const specUpdateRoot = await createFixtureRoot('spec-update-direct');
+const specUpdateCodeStylePath = path.join(specUpdateRoot, '.agents', 'spec', 'backend', 'code-style-guidelines.md');
+const specUpdateMissingSecurityPath = path.join(specUpdateRoot, '.agents', 'spec', 'backend', 'security-guidelines.md');
+await fs.mkdir(path.join(specUpdateRoot, '.agents', 'spec', 'backend'), {recursive: true});
+await fs.writeFile(specUpdateCodeStylePath, '# 代码风格规范\n\n## 概览\n历史概览保留。\n\n## 命名规范\n\n', 'utf8');
+const prePlanContent = await readUtf8(specUpdateCodeStylePath);
+const recordedGitCalls = [];
+const fakeGitReader = async ({repoRoot: targetRoot, sinceIso}) => {
+  recordedGitCalls.push({repoRoot: targetRoot, sinceIso});
+  return {
+    available: true,
+    source: 'git',
+    sinceIso,
+    commits: [{
+      hash: 'abc1234',
+      date: '2026-04-17T17:40:00.000Z',
+      subject: 'Add naming evidence',
+      patch: 'diff --git a/src/main/java/com/example/app/App.java b/src/main/java/com/example/app/App.java',
+    }],
+  };
+};
+const specUpdateOutput = [];
+const specUpdatePlan = await runSpecUpdate(specUpdateRoot, {
+  write: (text) => specUpdateOutput.push(text),
+  gitReader: fakeGitReader,
+});
+assert.equal(specUpdatePlan.mode, 'update-plan');
+assert.equal(specUpdatePlan.specRootExists, true);
+assert.equal(specUpdatePlan.approvalRequired, true);
+assert.equal(await fileExists(specUpdateMissingSecurityPath), false, 'spec-update should not create missing files during planning');
+assert.equal(await readUtf8(specUpdateCodeStylePath), prePlanContent, 'spec-update planning must not modify files');
+assert.equal(recordedGitCalls.length, 1);
+assert.equal(recordedGitCalls[0].repoRoot, specUpdateRoot);
+assert.ok(recordedGitCalls[0].sinceIso);
+assert.ok(specUpdatePlan.proposedFiles.includes('.agents/spec/backend/code-style-guidelines.md'));
+assert.ok(specUpdatePlan.proposedSectionsByFile['.agents/spec/backend/code-style-guidelines.md'].includes('命名规范'));
+assert.equal(specUpdatePlan.gitEvidence.available, true);
+assert.ok(specUpdatePlan.gitEvidence.commits.some((entry) => entry.subject === 'Add naming evidence'));
+assert.match(specUpdateOutput.join(''), /Mode: update-plan/i);
+assert.match(specUpdateOutput.join(''), /Existing spec files considered:/i);
+assert.match(specUpdateOutput.join(''), /\.agents\/spec\/backend\/code-style-guidelines\.md/i);
+assert.match(specUpdateOutput.join(''), /Git evidence window starts:/i);
+assert.match(specUpdateOutput.join(''), /Git commits collected for review:/i);
+assert.match(specUpdateOutput.join(''), /Add naming evidence/i);
+assert.match(specUpdateOutput.join(''), /Approval required before applying updates\./i);
+assert.match(specUpdateOutput.join(''), /Git evidence commits: 1/i);
+await assert.rejects(() => applySpecUpdatePlan(specUpdateRoot, specUpdatePlan), /approved/i);
+const appliedSpecUpdate = await applySpecUpdatePlan(specUpdateRoot, specUpdatePlan, {approved: true});
+assert.ok(appliedSpecUpdate.written.includes('.agents/spec/backend/code-style-guidelines.md'));
+assert.equal(await fileExists(specUpdateMissingSecurityPath), false, 'approved spec-update should still not create missing files');
+assert.match(await readUtf8(specUpdateCodeStylePath), /## 命名规范\s+> 对于类、接口、注解、枚举的命名规范定义。/);
+
+const specUpdateEmptyRoot = await createFixtureRoot('spec-update-empty');
+const specUpdateEmptyOutput = [];
+const specUpdateEmptyResult = await runSpecUpdate(specUpdateEmptyRoot, {write: (text) => specUpdateEmptyOutput.push(text)});
+assert.equal(specUpdateEmptyResult.mode, 'update-plan');
+assert.equal(specUpdateEmptyResult.specRootExists, false);
+assert.equal(specUpdateEmptyResult.approvalRequired, false);
+assert.equal(specUpdateEmptyResult.proposedFiles.length, 0);
+assert.equal(await fileExists(path.join(specUpdateEmptyRoot, '.agents', 'spec')), false, 'spec-update should not initialize missing spec trees');
+assert.match(specUpdateEmptyOutput.join(''), /\.agents\/spec was not found\./i);
+
+const specUpdateShortCircuitRoot = await createFixtureRoot('spec-update-short-circuit');
+let factCollectorCalls = 0;
+const specUpdateShortCircuitPlan = await planSpecUpdate(specUpdateShortCircuitRoot, {
+  factCollector: async () => {
+    factCollectorCalls += 1;
+    throw new Error('fact collector should not run when .agents/spec is missing');
+  },
+});
+assert.equal(specUpdateShortCircuitPlan.specRootExists, false);
+assert.equal(specUpdateShortCircuitPlan.facts, null);
+assert.equal(factCollectorCalls, 0);
+
+const specUpdateGitErrorRoot = await createFixtureRoot('spec-update-git-error');
+const specUpdateGitErrorCodeStylePath = path.join(specUpdateGitErrorRoot, '.agents', 'spec', 'backend', 'code-style-guidelines.md');
+await fs.mkdir(path.join(specUpdateGitErrorRoot, '.agents', 'spec', 'backend'), {recursive: true});
+await fs.writeFile(specUpdateGitErrorCodeStylePath, '# 代码风格规范\n\n## 概览\n历史概览保留。\n\n## 命名规范\n\n', 'utf8');
+const noGitPlan = await planSpecUpdate(specUpdateGitErrorRoot, {
+  gitReader: async () => {
+    throw new Error('git unavailable in test');
+  },
+});
+assert.equal(noGitPlan.specRootExists, true);
+assert.equal(noGitPlan.gitEvidence.available, false);
+assert.match(noGitPlan.gitEvidence.error, /git/i);
 
 const updateLegacyRoot = await createFixtureRoot('setup-spec-update-legacy');
 const updateLegacyCodeStylePath = path.join(updateLegacyRoot, '.agents', 'spec', 'backend', 'code-style-guidelines.md');

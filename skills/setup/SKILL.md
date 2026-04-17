@@ -1,88 +1,28 @@
-``---
+---
 name: setup
-description: Use when initializing or conservatively refreshing project-specific spec documents under .agents/spec from the current repository''s real conventions, structure, and code examples.
+description: Use when an older prompt, test, or workflow still refers to setup while initializing or conservatively refreshing project-specific spec documents under .agents/spec.
 ---
 
-# Setup Project Specs
+# Setup (Legacy Alias)
 
-Initialize, overwrite, or conservatively update files under `.agents/spec` from checked-in evidence.
+`setup` is the legacy compatibility alias for [`spec-init`](../spec-init/SKILL.md).
 
-## Core Rule
+## Use This Alias Only When Needed
 
-Do not invent conventions. Read the repo, extract repeatable patterns, and write only what the current project can actually support.
+- Existing prompts, tests, or automation still say `setup`
+- You need backward compatibility while migrating to `spec-init`
 
-## Behavior Contract
+## Default Rule
 
-- `setup` supports three modes: `initialize`, `overwrite`, and `update`.
-- If `.agents/spec` has no files yet, initialize directly.
-- If `.agents/spec` already has files, ask whether to `overwrite` or `update`.
-- In `update` mode, do not create new files. Only补充或修正当前文件里已经存在的标题内容，并以事实代码为依据。
-- In `initialize` and `overwrite` mode, backend generation must follow the selected backend template flow instead of mixing custom extraction and direct template copy.
-- Frontend and guides keep their current generation logic.
+- Prefer `spec-init` in all new prompts, docs, and examples.
+- The behavior and scripts are the same as `spec-init`; this alias only preserves older entrypoints.
 
-## Backend Template Choice
+## Commands
 
-When `backend/` will be initialized or overwritten, ask which backend template to use:
+- `node ~/.agents/skills/superpowers/spec-init/scripts/create-spec-tree.mjs`
+- `node ~/.agents/skills/superpowers/spec-init/scripts/fill-spec.mjs`
 
-1. `custom`
-   - use `template/backend/custom`
-   - keep the template outline for each backend spec file
-   - follow the workflow sequence strictly: extract the writing guidance from each custom template file, scan the repository against every guidance item, capture evidence, and then write repository-backed normative statements into the matching spec file
-2. `java`
-   - use `template/backend/java`
-   - copy the selected template content directly into the corresponding backend spec files
-   - only files that the template explicitly allows to be filled from project facts, such as `directory-structure.md`, should receive fact-based additions
+## Compatibility Contract
 
-## When to Use
-
-- Starting a repository that does not yet have `.agents/spec/`
-- Backfilling missing spec files after a partial or interrupted setup
-- Refreshing existing spec files when repo reality has moved
-- Conservatively updating historical spec files without wiping human-authored conventions
-
-## Workflow
-
-1. Read the highest-signal sources first: `AGENTS.md`, `CLAUDE.md`, `README.md`, existing hook files, skill files, and relevant tests.
-2. Create the full spec tree skeleton when files are missing:
-   - `node ~/.agents/skills/superpowers/setup/scripts/create-spec-tree.mjs`
-3. Run the interactive fill flow:
-   - `node ~/.agents/skills/superpowers/setup/scripts/fill-spec.mjs`
-4. If spec files already exist, choose one:
-   - `overwrite`: rewrite the managed spec files end-to-end
-   - `update`: preserve existing files and update only the content under headings that already exist
-5. Review the generated summaries in:
-   - `.agents/spec/backend/index.md`
-   - `.agents/spec/frontend/index.md`
-   - `.agents/spec/guides/index.md`
-6. If evidence is missing for a layer, say so explicitly in the spec instead of fabricating policy.
-7. When `initialize` or `overwrite` runs on `backend/`, follow the selected backend template sequence exactly. Do not skip, merge, or reorder steps:
-
-   If the selected template is `custom`:
-   1. List every file under `template/backend/custom` that maps to a backend spec file.
-   2. For each `custom` template file, read the template body carefully and extract every writing guidance item, heading requirement, and placeholder statement(Content of the label `>`) that defines what evidence must be collected.
-   3. Turn those extracted guidance items into a scan checklist for the matching target file under `.agents/spec/backend` so each required rule can be verified separately.
-   4. Scan the repository in detail against that checklist. Check real code, directories, configuration, tests, documentation, and project instructions to find concrete evidence for each guidance item. 
-   5. Record the evidence before writing any rule. Each rule must be traceable to a real repository signal such as a code pattern, path, naming convention, configuration rule, test pattern, or documented project constraint. 
-   6. Convert only verified evidence into normative statements for the target spec file. Write rules that describe what the project actually does or clearly expects, not generic best practices. 
-   7. If a guidance item has no reliable evidence, say that the repository does not provide enough evidence yet. Do not guess, generalize, or silently fill the gap. 
-   8. Repeat the same extract -> checklist -> scan -> evidence -> normative statement flow for every `custom` backend spec file until all target files are completed.
-   9. After all backend files are generated, do a final review to confirm every generated rule can be traced back either to template-defined copy behavior or to repository evidence collected through the required sequence above.
-
-   If the selected template is not `custom`, copy the corresponding template files into `.agents/spec/backend` first, then apply fact-based additions only to the template-defined exception files.
-
-## Output Expectations
-
-- `backend/` should reflect the selected backend template flow: `custom` keeps the template outline, executes the required extraction-and-scan sequence, and fills the spec with repository-backed normative statements; other templates copy their template content except for explicit fact-filled exceptions.
-- `frontend/` should describe browser-facing assets only when the repository actually has them.
-- `guides/` should capture decision rules that help future implementation and review work stay consistent.
-
-## Red Flags
-
-- Overwriting a human-edited spec file without the user explicitly choosing `overwrite`
-- Letting `update` create new files or new section structure
-- Mixing `custom` extraction rules with non-`custom` template copy behavior
-- Skipping template guidance extraction, repository evidence capture, or the final traceability review in step 7
-- Writing “best practices” that the current repository does not follow
-- Pretending the repo has a framework or persistence layer that is not present
-- Skipping examples and source references
-- Replacing project-specific voice with generic process fluff``
+- Old imports under `skills/setup/scripts/` re-export the `skills/spec-init/scripts/` implementation.
+- If you touch behavior, update `spec-init` first and keep this alias in sync.
