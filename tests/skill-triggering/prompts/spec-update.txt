@@ -1,0 +1,1 @@
+This repository already has checked-in project specs. Please use spec-update to check whether .agents/spec exists first, read the existing spec files, collect qualifying committed git changes since the relevant spec update window, produce a conservative update plan for user review, and stop before applying any spec changes.

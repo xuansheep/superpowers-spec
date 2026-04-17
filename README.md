@@ -17,7 +17,7 @@ This fork keeps the core Superpowers idea: a coding agent should use composable 
    Installation instructions in this README point to `xuansheep/my-superpowers` instead of sending users to the upstream repository.
 
 2. **Added spec bootstrap capabilities**
-   This fork adds `setup`, `reading-spec`, and supporting scripts/tests for initializing and consuming repository-level spec structures.
+   This fork adds `spec-init` (with legacy alias `setup`), `spec-update`, `reading-spec`, and supporting scripts/tests for initializing and consuming repository-level spec structures.
 
 3. **Localized execution and review workflow changes**
    Skills such as `executing-plans`, `requesting-code-review`, and `subagent-driven-development` have been adjusted in this fork to fit the current workflow.
@@ -109,8 +109,14 @@ Start a new session and ask the agent to perform something that should trigger a
 - Testing: `test-driven-development`
 - Debugging: `systematic-debugging`, `verification-before-completion`
 - Collaboration: `brainstorming`, `writing-plans`, `executing-plans`, `dispatching-parallel-agents`, `requesting-code-review`, `receiving-code-review`, `using-git-worktrees`, `finishing-a-development-branch`, `subagent-driven-development`
-- Spec & setup: `setup`, `reading-spec`
+- Spec bootstrap: `spec-init`, `spec-update`, `setup` (legacy alias), `reading-spec`
 - Meta: `writing-skills`, `using-superpowers`
+
+## Spec Update Workflow
+
+- `spec-update` now checks whether `.agents/spec` exists before doing anything else.
+- `spec-update` reads existing spec files, gathers committed git changes from the relevant spec time window, and emits an update plan for review.
+- `spec-update` does not directly apply updates from the CLI command; updates are applied only after the plan is reviewed and approved.
 
 ## Philosophy
 
