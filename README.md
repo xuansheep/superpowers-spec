@@ -4,6 +4,11 @@
 
 `my-superpowers` is a fork of [obra/superpowers](https://github.com/obra/superpowers), maintained for the workflows, constraints, and tooling expectations used in this repository.
 
+The fork repository is:
+https://github.com/xuansheep/my-superpowers
+
+The plugin install name and skill namespace remain `superpowers` for compatibility with existing agent plugin systems and skill invocation examples.
+
 Original upstream README:
 https://github.com/obra/superpowers/blob/main/README.md
 
@@ -14,20 +19,50 @@ This fork keeps the core Superpowers idea: a coding agent should use composable 
 ## Major Differences From Upstream
 
 1. **Repository source changed**
-   Installation instructions in this README point to `xuansheep/my-superpowers` instead of sending users to the upstream repository.
+   Installation instructions in this README point to `xuansheep/my-superpowers` where the platform supports installing from a Git repository.
 
-2. **Added spec bootstrap capabilities**
+2. **Plugin name remains compatible**
+   The repository is named `my-superpowers`, but the Claude Code, Cursor, OpenCode, Gemini, and skill-facing plugin namespace remains `superpowers`. Renaming the plugin namespace everywhere would break existing usage for no good reason. That kind of churn is how people create their own outage and then act surprised.
+
+3. **Added spec bootstrap capabilities**
    This fork adds `spec-init` (with legacy alias `setup`), `spec-update`, `reading-spec`, and supporting scripts/tests for initializing and consuming repository-level spec structures.
 
-3. **Localized execution and review workflow changes**
+4. **Localized execution and review workflow changes**
    Skills such as `executing-plans`, `requesting-code-review`, and `subagent-driven-development` have been adjusted in this fork to fit the current workflow.
 
-4. **Fork-maintained documentation and install entrypoints**
-   This README documents how to use this fork directly, rather than treating upstream distribution channels as the default path.
+5. **Fork-maintained documentation and install entrypoints**
+   This README documents how to use this fork directly, rather than treating upstream distribution channels as the only path.
 
 ## Installation
 
-All installation examples below use the current repository address.
+The repository path is `xuansheep/my-superpowers`. The plugin name or namespace users reference remains `superpowers`.
+
+### Claude Code
+
+For normal Claude Code users, install the official Superpowers marketplace plugin:
+
+```text
+/plugin marketplace add xuansheep/my-superpowers
+/plugin install superpowers@my-superpowers
+```
+
+For local development or testing of this fork, run Claude Code with this repository as the plugin directory:
+
+```bash
+claude --plugin-dir /path/to/my-superpowers
+```
+
+When running from this repository, the local Claude plugin metadata is under `.claude-plugin/` and still exposes the plugin as `superpowers`.
+
+### Cursor
+
+Install this fork from the current repository:
+
+```text
+/add-plugin https://github.com/xuansheep/my-superpowers
+```
+
+Cursor uses `.cursor-plugin/plugin.json`; the plugin name is kept as `superpowers` while the source repository remains this fork.
 
 ### Codex
 
@@ -90,9 +125,13 @@ If your agent platform supports loading skills from a local directory, clone thi
 git clone https://github.com/xuansheep/my-superpowers.git
 ```
 
+Use `superpowers` as the plugin or skills namespace unless your platform requires a different local alias.
+
 ## Verify Installation
 
 Start a new session and ask the agent to perform something that should trigger a workflow, such as planning a feature, debugging an issue systematically, or reading specs before implementation.
+
+If installation is working, the agent should invoke the relevant skill workflow instead of jumping straight into unstructured code changes.
 
 ## Workflow Overview
 
@@ -130,6 +169,22 @@ Start a new session and ask the agent to perform something that should trigger a
 Extend this fork by updating skills, scripts, or workflow docs in this repository and testing them appropriately before opening a PR.
 
 ## Updating
+
+### Claude Code official marketplace install
+
+```text
+/plugin update superpowers@my-superpowers
+```
+
+### Claude Code local plugin directory
+
+```bash
+cd /path/to/my-superpowers && git pull
+```
+
+### Cursor
+
+Refresh or reinstall the plugin from the Cursor plugin UI after pulling the latest repository changes.
 
 ### Codex local clone
 

@@ -1,19 +1,19 @@
 {
   "name": "superpowers-dev",
-  "description": "Development marketplace for Superpowers core skills library",
+  "description": "Development marketplace for the my-superpowers Claude Code skills library",
   "owner": {
-    "name": "Jesse Vincent",
-    "email": "jesse@fsck.com"
+    "name": "xuansheep",
+    "email": "xuansheep@gmail.com"
   },
   "plugins": [
     {
       "name": "superpowers",
-      "description": "Core skills library for Claude Code: TDD, debugging, collaboration patterns, and proven techniques",
+      "description": "Core skills library for Claude Code: TDD, debugging, collaboration patterns, and proven techniques for the my-superpowers fork",
       "version": "5.0.7",
       "source": "./",
       "author": {
-        "name": "Jesse Vincent",
-        "email": "jesse@fsck.com"
+        "name": "xuansheep",
+        "email": "xuansheep@gmail.com"
       }
     }
   ]
