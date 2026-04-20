@@ -44,6 +44,7 @@ No worktree directory found. Where should I create worktrees?
 
 1. .worktrees/ (project-local, hidden)
 2. ~/.config/superpowers/worktrees/<project-name>/ (global location)
+3. Without using worktree, execute in the current branch
 
 Which would you prefer?
 ```
