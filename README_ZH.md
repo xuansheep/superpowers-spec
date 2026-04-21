@@ -2,10 +2,10 @@
 
 [English](./README.md) | [中文](./README_ZH.md)
 
-`my-superpowers` 是基于 [obra/superpowers](https://github.com/obra/superpowers) 的一个 fork，用于维护和扩展适配当前仓库工作流、约束和工具使用预期的 Superpowers skills。
+`superpowers-spec` 是基于 [obra/superpowers](https://github.com/obra/superpowers) 的一个 fork，用于维护和扩展适配当前仓库工作流、约束和工具使用预期的 Superpowers skills。
 
 当前 fork 仓库地址：
-https://github.com/xuansheep/my-superpowers
+https://github.com/xuansheep/superpowers-spec
 
 为了兼容现有 agent 插件系统和 skill 调用方式，插件安装名和技能命名空间仍然保持为 `superpowers`。
 
@@ -19,10 +19,10 @@ https://github.com/obra/superpowers/blob/main/README.md
 ## 与上游的主要差异
 
 1. **仓库来源已切换**
-   在支持通过 Git 仓库安装的平台上，README 中的安装入口统一指向 `xuansheep/my-superpowers`。
+   在支持通过 Git 仓库安装的平台上，README 中的安装入口统一指向 `xuansheep/superpowers-spec`。
 
 2. **插件命名空间保持兼容**
-   当前仓库名是 `my-superpowers`，但 Claude Code、Cursor、OpenCode、Gemini 以及技能调用相关的插件命名空间仍为 `superpowers`，以保持现有使用方式兼容。
+   当前仓库名是 `superpowers-spec`，但 Claude Code、Cursor、OpenCode、Gemini 以及技能调用相关的插件命名空间仍为 `superpowers`，以保持现有使用方式兼容。
 
 3. **新增 spec bootstrap 能力**
    本 fork 增加了 `spec-init`（兼容旧别名 `setup`）、`spec-update`、`reading-spec` 以及配套脚本和测试，用于初始化和使用仓库级 spec 结构。
@@ -35,21 +35,21 @@ https://github.com/obra/superpowers/blob/main/README.md
 
 ## 安装方式
 
-仓库路径是 `xuansheep/my-superpowers`，但用户引用的插件名或技能命名空间仍是 `superpowers`。
+仓库路径是 `xuansheep/superpowers-spec`，但用户引用的插件名或技能命名空间仍是 `superpowers`。
 
 ### Claude Code
 
 对于普通 Claude Code 用户，安装当前 fork 对应的 Superpowers marketplace 插件：
 
 ```text
-/plugin marketplace add xuansheep/my-superpowers
-/plugin install superpowers@my-superpowers
+/plugin marketplace add xuansheep/superpowers-spec
+/plugin install superpowers@superpowers-spec
 ```
 
 如果要对当前 fork 做本地开发或测试，可以让 Claude Code 直接使用这个仓库作为插件目录：
 
 ```bash
-claude --plugin-dir /path/to/my-superpowers
+claude --plugin-dir /path/to/superpowers-spec
 ```
 
 当 Claude Code 从当前仓库运行时，本地插件元数据位于 `.claude-plugin/`，对外暴露的插件名仍然是 `superpowers`。
@@ -59,7 +59,7 @@ claude --plugin-dir /path/to/my-superpowers
 从当前仓库安装这个 fork：
 
 ```text
-/add-plugin https://github.com/xuansheep/my-superpowers
+/add-plugin https://github.com/xuansheep/superpowers-spec
 ```
 
 Cursor 使用 `.cursor-plugin/plugin.json`；插件名仍然保持为 `superpowers`，但源码仓库是当前 fork。
@@ -69,13 +69,13 @@ Cursor 使用 `.cursor-plugin/plugin.json`；插件名仍然保持为 `superpowe
 告诉 Codex：
 
 ```text
-Fetch and follow instructions from https://github.com/xuansheep/my-superpowers/blob/main/.codex/INSTALL.md
+Fetch and follow instructions from https://github.com/xuansheep/superpowers-spec/blob/main/.codex/INSTALL.md
 ```
 
 手动安装：
 
 ```bash
-git clone https://github.com/xuansheep/my-superpowers.git ~/.codex/superpowers
+git clone https://github.com/xuansheep/superpowers-spec.git ~/.codex/superpowers
 mkdir -p ~/.agents/skills
 ln -s ~/.codex/superpowers/skills ~/.agents/skills/superpowers
 ```
@@ -93,7 +93,7 @@ cmd /c mklink /J "$env:USERPROFILE\.agents\skills\superpowers" "$env:USERPROFILE
 
 ```json
 {
-  "plugin": ["superpowers@git+https://github.com/xuansheep/my-superpowers.git"]
+  "plugin": ["superpowers@git+https://github.com/xuansheep/superpowers-spec.git"]
 }
 ```
 
@@ -101,14 +101,14 @@ cmd /c mklink /J "$env:USERPROFILE\.agents\skills\superpowers" "$env:USERPROFILE
 
 ```json
 {
-  "plugin": ["superpowers@git+https://github.com/xuansheep/my-superpowers.git#main"]
+  "plugin": ["superpowers@git+https://github.com/xuansheep/superpowers-spec.git#main"]
 }
 ```
 
 ### Gemini CLI
 
 ```bash
-gemini extensions install https://github.com/xuansheep/my-superpowers
+gemini extensions install https://github.com/xuansheep/superpowers-spec
 ```
 
 更新：
@@ -122,7 +122,7 @@ gemini extensions update superpowers
 如果你的 agent 平台支持从本地目录加载 skills，可以直接克隆仓库并将其中的 `skills/` 目录暴露给平台：
 
 ```bash
-git clone https://github.com/xuansheep/my-superpowers.git
+git clone https://github.com/xuansheep/superpowers-spec.git
 ```
 
 除非平台要求不同的本地别名，否则插件或技能命名空间仍建议使用 `superpowers`。
@@ -173,13 +173,13 @@ git clone https://github.com/xuansheep/my-superpowers.git
 ### Claude Code 官方 marketplace 安装
 
 ```text
-/plugin update superpowers@my-superpowers
+/plugin update superpowers@superpowers-spec
 ```
 
 ### Claude Code 本地插件目录
 
 ```bash
-cd /path/to/my-superpowers && git pull
+cd /path/to/superpowers-spec && git pull
 ```
 
 ### Cursor
@@ -208,5 +208,5 @@ MIT License。详见 `LICENSE`。
 
 ## 支持
 
-- Issues: https://github.com/xuansheep/my-superpowers/issues
-- Repository: https://github.com/xuansheep/my-superpowers
+- Issues: https://github.com/xuansheep/superpowers-spec/issues
+- Repository: https://github.com/xuansheep/superpowers-spec

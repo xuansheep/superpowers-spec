@@ -2,10 +2,10 @@
 
 [English](./README.md) | [中文](./README_ZH.md)
 
-`my-superpowers` is a fork of [obra/superpowers](https://github.com/obra/superpowers), maintained for the workflows, constraints, and tooling expectations used in this repository.
+`superpowers-spec` is a fork of [obra/superpowers](https://github.com/obra/superpowers), maintained for the workflows, constraints, and tooling expectations used in this repository.
 
 The fork repository is:
-https://github.com/xuansheep/my-superpowers
+https://github.com/xuansheep/superpowers-spec
 
 The plugin install name and skill namespace remain `superpowers` for compatibility with existing agent plugin systems and skill invocation examples.
 
@@ -19,10 +19,10 @@ This fork keeps the core Superpowers idea: a coding agent should use composable 
 ## Major Differences From Upstream
 
 1. **Repository source changed**
-   Installation instructions in this README point to `xuansheep/my-superpowers` where the platform supports installing from a Git repository.
+   Installation instructions in this README point to `xuansheep/superpowers-spec` where the platform supports installing from a Git repository.
 
 2. **Plugin name remains compatible**
-   The repository is named `my-superpowers`, but the Claude Code, Cursor, OpenCode, Gemini, and skill-facing plugin namespace remains `superpowers`. Renaming the plugin namespace everywhere would break existing usage for no good reason. That kind of churn is how people create their own outage and then act surprised.
+   The repository is named `superpowers-spec`, but the Claude Code, Cursor, OpenCode, Gemini, and skill-facing plugin namespace remains `superpowers`. Renaming the plugin namespace everywhere would break existing usage for no good reason. That kind of churn is how people create their own outage and then act surprised.
 
 3. **Added spec bootstrap capabilities**
    This fork adds `spec-init` (with legacy alias `setup`), `spec-update`, `reading-spec`, and supporting scripts/tests for initializing and consuming repository-level spec structures.
@@ -35,21 +35,21 @@ This fork keeps the core Superpowers idea: a coding agent should use composable 
 
 ## Installation
 
-The repository path is `xuansheep/my-superpowers`. The plugin name or namespace users reference remains `superpowers`.
+The repository path is `xuansheep/superpowers-spec`. The plugin name or namespace users reference remains `superpowers`.
 
 ### Claude Code
 
 For normal Claude Code users, install the official Superpowers marketplace plugin:
 
 ```text
-/plugin marketplace add xuansheep/my-superpowers
-/plugin install superpowers@my-superpowers
+/plugin marketplace add xuansheep/superpowers-spec
+/plugin install superpowers@superpowers-spec
 ```
 
 For local development or testing of this fork, run Claude Code with this repository as the plugin directory:
 
 ```bash
-claude --plugin-dir /path/to/my-superpowers
+claude --plugin-dir /path/to/superpowers-spec
 ```
 
 When running from this repository, the local Claude plugin metadata is under `.claude-plugin/` and still exposes the plugin as `superpowers`.
@@ -59,7 +59,7 @@ When running from this repository, the local Claude plugin metadata is under `.c
 Install this fork from the current repository:
 
 ```text
-/add-plugin https://github.com/xuansheep/my-superpowers
+/add-plugin https://github.com/xuansheep/superpowers-spec
 ```
 
 Cursor uses `.cursor-plugin/plugin.json`; the plugin name is kept as `superpowers` while the source repository remains this fork.
@@ -69,13 +69,13 @@ Cursor uses `.cursor-plugin/plugin.json`; the plugin name is kept as `superpower
 Tell Codex:
 
 ```text
-Fetch and follow instructions from https://github.com/xuansheep/my-superpowers/blob/main/.codex/INSTALL.md
+Fetch and follow instructions from https://github.com/xuansheep/superpowers-spec/blob/main/.codex/INSTALL.md
 ```
 
 Manual install:
 
 ```bash
-git clone https://github.com/xuansheep/my-superpowers.git ~/.codex/superpowers
+git clone https://github.com/xuansheep/superpowers-spec.git ~/.codex/superpowers
 mkdir -p ~/.agents/skills
 ln -s ~/.codex/superpowers/skills ~/.agents/skills/superpowers
 ```
@@ -93,7 +93,7 @@ Add this to the `plugin` array in `opencode.json`:
 
 ```json
 {
-  "plugin": ["superpowers@git+https://github.com/xuansheep/my-superpowers.git"]
+  "plugin": ["superpowers@git+https://github.com/xuansheep/superpowers-spec.git"]
 }
 ```
 
@@ -101,14 +101,14 @@ To pin to a specific Git ref or tag, use for example:
 
 ```json
 {
-  "plugin": ["superpowers@git+https://github.com/xuansheep/my-superpowers.git#main"]
+  "plugin": ["superpowers@git+https://github.com/xuansheep/superpowers-spec.git#main"]
 }
 ```
 
 ### Gemini CLI
 
 ```bash
-gemini extensions install https://github.com/xuansheep/my-superpowers
+gemini extensions install https://github.com/xuansheep/superpowers-spec
 ```
 
 Update:
@@ -122,7 +122,7 @@ gemini extensions update superpowers
 If your agent platform supports loading skills from a local directory, clone this repository and expose its `skills/` directory to that platform.
 
 ```bash
-git clone https://github.com/xuansheep/my-superpowers.git
+git clone https://github.com/xuansheep/superpowers-spec.git
 ```
 
 Use `superpowers` as the plugin or skills namespace unless your platform requires a different local alias.
@@ -173,13 +173,13 @@ Extend this fork by updating skills, scripts, or workflow docs in this repositor
 ### Claude Code official marketplace install
 
 ```text
-/plugin update superpowers@my-superpowers
+/plugin update superpowers@superpowers-spec
 ```
 
 ### Claude Code local plugin directory
 
 ```bash
-cd /path/to/my-superpowers && git pull
+cd /path/to/superpowers-spec && git pull
 ```
 
 ### Cursor
@@ -208,5 +208,5 @@ MIT License. See `LICENSE`.
 
 ## Support
 
-- Issues: https://github.com/xuansheep/my-superpowers/issues
-- Repository: https://github.com/xuansheep/my-superpowers
+- Issues: https://github.com/xuansheep/superpowers-spec/issues
+- Repository: https://github.com/xuansheep/superpowers-spec

@@ -1,13 +1,13 @@
 {
   "name": "superpowers",
-  "description": "Core skills library for Claude Code: TDD, debugging, collaboration patterns, and proven techniques for the my-superpowers fork",
+  "description": "Core skills library for Claude Code: TDD, debugging, collaboration patterns, and proven techniques for the superpowers-spec fork",
   "version": "5.0.7",
   "author": {
     "name": "xuansheep",
     "email": "xuansheep@gmail.com"
   },
-  "homepage": "https://github.com/xuansheep/my-superpowers",
-  "repository": "https://github.com/xuansheep/my-superpowers",
+  "homepage": "https://github.com/xuansheep/superpowers-spec",
+  "repository": "https://github.com/xuansheep/superpowers-spec",
   "license": "MIT",
   "keywords": [
     "skills",
