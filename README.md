@@ -1,4 +1,4 @@
-# My Superpowers
+# Superpowers Spec
 
 [English](./README.md) | [中文](./README_ZH.md)
 
@@ -25,7 +25,7 @@ This fork keeps the core Superpowers idea: a coding agent should use composable 
    The repository is named `superpowers-spec`, but the Claude Code, Cursor, OpenCode, Gemini, and skill-facing plugin namespace remains `superpowers`. Renaming the plugin namespace everywhere would break existing usage for no good reason. That kind of churn is how people create their own outage and then act surprised.
 
 3. **Added spec bootstrap capabilities**
-   This fork adds `spec-init` (with legacy alias `setup`), `spec-update`, `reading-spec`, and supporting scripts/tests for initializing and consuming repository-level spec structures.
+   This fork adds `spec-init`, `spec-update`, `reading-spec`, and supporting scripts/tests for initializing and consuming repository-level spec structures.
 
 4. **Localized execution and review workflow changes**
    Skills such as `executing-plans`, `requesting-code-review`, and `subagent-driven-development` have been adjusted in this fork to fit the current workflow.
