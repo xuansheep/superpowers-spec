@@ -1,4 +1,4 @@
-# My Superpowers 中文说明
+# Superpowers Spec 中文说明
 
 [English](./README.md) | [中文](./README_ZH.md)
 
@@ -25,7 +25,7 @@ https://github.com/obra/superpowers/blob/main/README.md
    当前仓库名是 `superpowers-spec`，但 Claude Code、Cursor、OpenCode、Gemini 以及技能调用相关的插件命名空间仍为 `superpowers`，以保持现有使用方式兼容。
 
 3. **新增 spec bootstrap 能力**
-   本 fork 增加了 `spec-init`（兼容旧别名 `setup`）、`spec-update`、`reading-spec` 以及配套脚本和测试，用于初始化和使用仓库级 spec 结构。
+   本 fork 增加了 `spec-init`、`spec-update`、`reading-spec` 以及配套脚本和测试，用于初始化和使用仓库级 spec 结构。
 
 4. **执行与评审流程有本地化调整**
    `executing-plans`、`requesting-code-review`、`subagent-driven-development` 等技能在本仓库中做了调整，以适配当前维护方式和工作流要求。
