@@ -1,6 +1,6 @@
 ---
 name: reading-spec
-description: Use when a workflow needs repository-specific rules from .agents/spec before planning, implementation, or review.
+description: Use when a workflow needs repository-specific rules from docs/project-spec before planning, implementation, or review.
 ---
 
 # Reading Spec
@@ -14,22 +14,22 @@ Read only what exists, summarize only what you actually saw, and never invent re
 ## Candidate Files
 
 Check these paths in order:
-- `.agents/spec/guides/index.md`
-- `.agents/spec/backend/index.md`
-- `.agents/spec/frontend/index.md`
+- `docs/project-spec/guides/index.md`
+- `docs/project-spec/backend/index.md`
+- `docs/project-spec/frontend/index.md`
 
 ## Workflow
 
 1. Check whether each candidate file exists.
 2. Read only the index files that actually exist.
-3. Start with `.agents/spec/guides/index.md` when it exists.
-4. If task scope is unclear, read every existing index under `.agents/spec/`.
+3. Start with `docs/project-spec/guides/index.md` when it exists.
+4. If task scope is unclear, read every existing index under `docs/project-spec/`.
 5. Produce these outputs:
    - `PROJECT_SPEC_INDEXES_FOUND`
    - `PROJECT_RULES_SUMMARY`
 6. If no index exists, set:
    - `PROJECT_SPEC_INDEXES_FOUND: none`
-   - `PROJECT_RULES_SUMMARY: No project spec index files were present under .agents/spec/.`
+   - `PROJECT_RULES_SUMMARY: No project spec index files were present under docs/project-spec/.`
 7. If an index clearly points to a deeper rule file that is obviously relevant to the current task, read that file before continuing.
 
 ## Output Contract

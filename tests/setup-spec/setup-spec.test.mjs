@@ -170,8 +170,8 @@ await fs.writeFile(overwriteBackendIndexPath, 'custom backend index\n', 'utf8');
 await fs.writeFile(overwriteFrontendPath, 'frontend override\n', 'utf8');
 
 const overwriteResult = await mod.setupSpec(overwriteRoot, {mode: 'overwrite', backendTemplate: 'java'});
-assert.ok(overwriteResult.written.includes('.agents/spec/backend/index.md'));
-assert.ok(overwriteResult.written.includes('.agents/spec/frontend/index.md'));
+assert.ok(overwriteResult.written.includes('docs/project-spec/backend/index.md'));
+assert.ok(overwriteResult.written.includes('docs/project-spec/frontend/index.md'));
 assert.notEqual(await readUtf8(overwriteBackendIndexPath), 'custom backend index\n');
 assert.notEqual(await readUtf8(overwriteFrontendPath), 'frontend override\n');
 
@@ -184,7 +184,7 @@ await fs.writeFile(updateCodeStylePath, '# 代码风格规范\n\n## 概览\n历�
 const updateResult = await mod.setupSpec(updateRoot, {mode: 'update'});
 const updatedCodeStyle = await readUtf8(updateCodeStylePath);
 assert.equal(await fileExists(updateMissingSecurityPath), false, 'update should not create missing files');
-assert.ok(updateResult.written.includes('.agents/spec/backend/code-style-guidelines.md'));
+assert.ok(updateResult.written.includes('docs/project-spec/backend/code-style-guidelines.md'));
 assert.match(updatedCodeStyle, /历史概览保留。/);
 assert.match(updatedCodeStyle, /## 命名规范\s+> 对于类、接口、注解、枚举的命名规范定义。/);
 assert.doesNotMatch(updatedCodeStyle, /## 格式规范/);
@@ -223,8 +223,8 @@ assert.equal(await readUtf8(specUpdateCodeStylePath), prePlanContent, 'spec-upda
 assert.equal(recordedGitCalls.length, 1);
 assert.equal(recordedGitCalls[0].repoRoot, specUpdateRoot);
 assert.ok(recordedGitCalls[0].sinceIso);
-assert.ok(specUpdatePlan.proposedFiles.includes('.agents/spec/backend/code-style-guidelines.md'));
-assert.ok(specUpdatePlan.proposedSectionsByFile['.agents/spec/backend/code-style-guidelines.md'].includes('命名规范'));
+assert.ok(specUpdatePlan.proposedFiles.includes('docs/project-spec/backend/code-style-guidelines.md'));
+assert.ok(specUpdatePlan.proposedSectionsByFile['docs/project-spec/backend/code-style-guidelines.md'].includes('命名规范'));
 assert.equal(specUpdatePlan.gitEvidence.available, true);
 assert.ok(specUpdatePlan.gitEvidence.commits.some((entry) => entry.subject === 'Add naming evidence'));
 assert.match(specUpdateOutput.join(''), /Mode: update-plan/i);
@@ -237,7 +237,7 @@ assert.match(specUpdateOutput.join(''), /Approval required before applying updat
 assert.match(specUpdateOutput.join(''), /Git evidence commits: 1/i);
 await assert.rejects(() => applySpecUpdatePlan(specUpdateRoot, specUpdatePlan), /approved/i);
 const appliedSpecUpdate = await applySpecUpdatePlan(specUpdateRoot, specUpdatePlan, {approved: true});
-assert.ok(appliedSpecUpdate.written.includes('.agents/spec/backend/code-style-guidelines.md'));
+assert.ok(appliedSpecUpdate.written.includes('docs/project-spec/backend/code-style-guidelines.md'));
 assert.equal(await fileExists(specUpdateMissingSecurityPath), false, 'approved spec-update should still not create missing files');
 assert.match(await readUtf8(specUpdateCodeStylePath), /## 命名规范\s+> 对于类、接口、注解、枚举的命名规范定义。/);
 
@@ -256,7 +256,7 @@ let factCollectorCalls = 0;
 const specUpdateShortCircuitPlan = await planSpecUpdate(specUpdateShortCircuitRoot, {
   factCollector: async () => {
     factCollectorCalls += 1;
-    throw new Error('fact collector should not run when .agents/spec is missing');
+    throw new Error('fact collector should not run when docs/project-spec is missing');
   },
 });
 assert.equal(specUpdateShortCircuitPlan.specRootExists, false);

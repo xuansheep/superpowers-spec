@@ -37,7 +37,7 @@ export async function runSetupFlow(repoRoot, { ask, write = () => {} }) {
   const result = await setupSpec(repoRoot, { mode, backendTemplate });
   const skippedCount = Object.values(SPEC_TREE).flat().length - result.written.length;
 
-  write(`Initialized .agents/spec for ${result.facts.projectName} at ${repoRoot}\n`);
+  write(`Initialized docs/project-spec for ${result.facts.projectName} at ${repoRoot}\n`);
   write(`Mode: ${mode}\n`);
   if (mode !== 'update') {
     write(`Backend template: ${backendTemplate}\n`);

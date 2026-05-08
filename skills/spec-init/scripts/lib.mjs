@@ -218,7 +218,7 @@ export function renderSpecFile(relativePath, facts, options = {}) {
 }
 
 function allManagedSpecPaths() {
-  return Object.entries(SPEC_TREE).flatMap(([section, files]) => files.map((entry) => `.agents/spec/${section}/${entry.file}`));
+  return Object.entries(SPEC_TREE).flatMap(([section, files]) => files.map((entry) => `docs/project-spec/${section}/${entry.file}`));
 }
 
 async function listAllSpecFiles(repoRoot) {

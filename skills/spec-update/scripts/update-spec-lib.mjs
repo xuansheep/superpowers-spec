@@ -61,7 +61,7 @@ async function readExistingSpecFiles(repoRoot, existingSpecFiles) {
 
 function managedSpecPathSet() {
   return new Set(
-    Object.entries(SPEC_TREE).flatMap(([section, files]) => files.map((entry) => `.agents/spec/${section}/${entry.file}`)),
+    Object.entries(SPEC_TREE).flatMap(([section, files]) => files.map((entry) => `docs/project-spec/${section}/${entry.file}`)),
   );
 }
 
@@ -261,7 +261,7 @@ export async function planSpecUpdate(repoRoot, {gitReader = defaultGitReader, fa
         available: false,
         source: 'git',
         commits: [],
-        error: '.agents/spec was not found.',
+        error: 'docs/project-spec was not found.',
       },
       proposedFiles: [],
       proposedSectionsByFile: {},
@@ -283,7 +283,7 @@ export async function planSpecUpdate(repoRoot, {gitReader = defaultGitReader, fa
       available: false,
       source: 'git',
       commits: [],
-      error: 'No existing spec files were found under .agents/spec.',
+      error: 'No existing spec files were found under docs/project-spec.',
     };
   } else {
     try {
@@ -368,11 +368,11 @@ function writeGitEvidence(plan, write) {
 
 function writePlanSummary(plan, write) {
   const projectName = plan.facts?.projectName ?? path.basename(plan.repoRoot);
-  write(`Planned .agents/spec update for ${projectName} at ${plan.repoRoot}\n`);
+  write(`Planned docs/project-spec update for ${projectName} at ${plan.repoRoot}\n`);
   write('Mode: update-plan\n');
 
   if (!plan.specRootExists) {
-    write('.agents/spec was not found.\n');
+    write('docs/project-spec was not found.\n');
     write('No update plan generated.\n');
     return;
   }

@@ -150,10 +150,11 @@ If installation is working, the agent should invoke the relevant skill workflow 
 - Collaboration: `brainstorming`, `writing-plans`, `executing-plans`, `dispatching-parallel-agents`, `requesting-code-review`, `receiving-code-review`, `using-git-worktrees`, `finishing-a-development-branch`, `subagent-driven-development`
 - Spec bootstrap: `spec-init`, `spec-update`, `setup` (legacy alias), `reading-spec`
 - Meta: `writing-skills`, `using-superpowers`
+- Learning: `automatic-learning` - captures high-value task retrospectives and keeps long-term memory current.
 
 ## Spec Update Workflow
 
-- `spec-update` now checks whether `.agents/spec` exists before doing anything else.
+- `spec-update` now checks whether `docs/project-spec` exists before doing anything else.
 - `spec-update` reads existing spec files, gathers committed git changes from the relevant spec time window, and emits an update plan for review.
 - `spec-update` does not directly apply updates from the CLI command; updates are applied only after the plan is reviewed and approved.
 
