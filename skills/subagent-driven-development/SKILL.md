@@ -132,8 +132,8 @@ You: I'm using Subagent-Driven Development to execute this plan.
 
 [Use superpowers:reading-spec]
   PROJECT_SPEC_INDEXES_FOUND:
-    - .agents/spec/guides/index.md
-    - .agents/spec/backend/index.md
+    - docs/project-spec/guides/index.md
+    - docs/project-spec/backend/index.md
   PROJECT_RULES_SUMMARY:
     - Search existing skills, hooks, prompts, and docs before adding structure
     - Keep core changes harness-focused and general-purpose

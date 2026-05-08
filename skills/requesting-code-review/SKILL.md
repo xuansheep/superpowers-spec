@@ -62,8 +62,8 @@ You: Let me request code review before proceeding.
 
 [Use superpowers:reading-spec]
   PROJECT_SPEC_INDEXES_FOUND:
-    - .agents/spec/guides/index.md
-    - .agents/spec/backend/index.md
+    - docs/project-spec/guides/index.md
+    - docs/project-spec/backend/index.md
   PROJECT_RULES_SUMMARY:
     - Search existing skills, hooks, prompts, and docs before adding structure
     - Keep core changes harness-focused and general-purpose
@@ -80,8 +80,8 @@ HEAD_SHA=$(git rev-parse HEAD)
   HEAD_SHA: 3df7661
   DESCRIPTION: Added verifyIndex() and repairIndex() with 4 issue types
   PROJECT_SPEC_INDEXES_FOUND:
-    - .agents/spec/guides/index.md
-    - .agents/spec/backend/index.md
+    - docs/project-spec/guides/index.md
+    - docs/project-spec/backend/index.md
   PROJECT_RULES_SUMMARY:
     - Search existing skills, hooks, prompts, and docs before adding structure
     - Keep core changes harness-focused and general-purpose

@@ -1,11 +1,11 @@
 ---
 name: spec-init
-description: Use when initializing or conservatively refreshing project-specific spec documents under .agents/spec from the current repository''s real conventions, structure, and code examples.
+description: Use when initializing or conservatively refreshing project-specific spec documents under docs/project-spec from the current repository''s real conventions, structure, and code examples.
 ---
 
 # Initialize Project Specs
 
-Initialize, overwrite, or conservatively refresh files under `.agents/spec` from checked-in evidence.
+Initialize, overwrite, or conservatively refresh files under `docs/project-spec` from checked-in evidence.
 
 ## Core Rule
 
@@ -15,10 +15,10 @@ Do not invent conventions. Read the repo, extract repeatable patterns, and write
 
 - `spec-init` supports three modes: `initialize`, `overwrite`, and `update`.
 - `setup` remains available as a legacy alias, but new prompts and docs should use `spec-init`.
-- If `.agents/spec` has no files yet, initialize directly.
-- If `.agents/spec` already has files, ask whether to `overwrite` or `update`.
+- If `docs/project-spec` has no files yet, initialize directly.
+- If `docs/project-spec` already has files, ask whether to `overwrite` or `update`.
 - In `update` mode, do not create new files. Refresh only content under headings that already exist, and keep the result grounded in repository facts.
-- The complete `update` workflow now lives in `spec-update`: it checks `.agents/spec` first, gathers committed git changes from the relevant spec time window, emits an update plan for review, and only applies changes after explicit approval.
+- The complete `update` workflow now lives in `spec-update`: it checks `docs/project-spec` first, gathers committed git changes from the relevant spec time window, emits an update plan for review, and only applies changes after explicit approval.
 - In `initialize` and `overwrite` mode, backend generation must follow the selected backend template flow instead of mixing custom extraction and direct template copy.
 - Frontend and guides keep their current generation logic.
 
@@ -37,7 +37,7 @@ When `backend/` will be initialized or overwritten, ask which backend template t
 
 ## When to Use
 
-- Starting a repository that does not yet have `.agents/spec/`
+- Starting a repository that does not yet have `docs/project-spec/`
 - Backfilling missing spec files after a partial or interrupted spec bootstrap
 - Refreshing existing spec files when repo reality has moved and you want the general entrypoint
 - Conservatively updating historical spec files without wiping human-authored conventions
@@ -56,9 +56,9 @@ Use `spec-update` when the task is specifically to review and update existing sp
    - `overwrite`: rewrite the managed spec files end-to-end
    - `update`: preserve existing files and update only the content under headings that already exist
 5. Review the generated summaries in:
-   - `.agents/spec/backend/index.md`
-   - `.agents/spec/frontend/index.md`
-   - `.agents/spec/guides/index.md`
+   - `docs/project-spec/backend/index.md`
+   - `docs/project-spec/frontend/index.md`
+   - `docs/project-spec/guides/index.md`
 6. If evidence is missing for a layer, say so explicitly in the spec instead of fabricating policy.
 7. When `initialize` or `overwrite` runs on `backend/`, follow the selected backend template sequence exactly. Do not skip, merge, or reorder steps.
 8. When the task is specifically `update`, prefer the dedicated skill and planning command:
@@ -69,7 +69,7 @@ Use `spec-update` when the task is specifically to review and update existing sp
    If the selected template is `custom`:
    1. List every file under `template/backend/custom` that maps to a backend spec file.
    2. For each `custom` template file, read the template body carefully and extract every writing guidance item, heading requirement, and placeholder statement(Content of the label `>`) that defines what evidence must be collected.
-   3. Turn those extracted guidance items into a scan checklist for the matching target file under `.agents/spec/backend` so each required rule can be verified separately.
+   3. Turn those extracted guidance items into a scan checklist for the matching target file under `docs/project-spec/backend` so each required rule can be verified separately.
    4. Scan the repository in detail against that checklist. Check real code, directories, configuration, tests, documentation, and project instructions to find concrete evidence for each guidance item.
    5. Record the evidence before writing any rule. Each rule must be traceable to a real repository signal such as a code pattern, path, naming convention, configuration rule, test pattern, or documented project constraint.
    6. Convert only verified evidence into normative statements for the target spec file. Write rules that describe what the project actually does or clearly expects, not generic best practices.
@@ -77,7 +77,7 @@ Use `spec-update` when the task is specifically to review and update existing sp
    8. Repeat the same extract -> checklist -> scan -> evidence -> normative statement flow for every `custom` backend spec file until all target files are completed.
    9. After all backend files are generated, do a final review to confirm every generated rule can be traced back either to template-defined copy behavior or to repository evidence collected through the required sequence above.
 
-   If the selected template is not `custom`, copy the corresponding template files into `.agents/spec/backend` first, then apply fact-based additions only to the template-defined exception files.
+   If the selected template is not `custom`, copy the corresponding template files into `docs/project-spec/backend` first, then apply fact-based additions only to the template-defined exception files.
 
 ## Output Expectations
 

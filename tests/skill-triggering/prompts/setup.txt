@@ -1,1 +1,1 @@
-This repository lost its project specs. Please use setup to initialize the missing .agents/spec structure from the current repo, populate only files that do not already exist, and leave any existing spec files untouched.
+This repository lost its project specs. Please use setup to initialize the missing docs/project-spec structure from the current repo, populate only files that do not already exist, and leave any existing spec files untouched.

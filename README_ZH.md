@@ -150,10 +150,11 @@ git clone https://github.com/xuansheep/superpowers-spec.git
 - 协作：`brainstorming`、`writing-plans`、`executing-plans`、`dispatching-parallel-agents`、`requesting-code-review`、`receiving-code-review`、`using-git-worktrees`、`finishing-a-development-branch`、`subagent-driven-development`
 - Spec bootstrap：`spec-init`、`spec-update`、`setup`（旧别名）、`reading-spec`
 - 元技能：`writing-skills`、`using-superpowers`
+- 自动学习：`automatic-learning` - 记录任务执行中的高价值复盘并更新长期记忆。
 
 ## Spec 更新工作流
 
-- `spec-update` 现在会先检查 `.agents/spec` 是否存在。
+- `spec-update` 现在会先检查 `docs/project-spec` 是否存在。
 - `spec-update` 会读取现有 spec 文件，收集相关时间窗内的已提交 git 变更，并生成一份更新计划供审核。
 - `spec-update` 的 CLI 不直接应用更新；只有计划审核通过后，后续流程才允许执行保守更新。
 

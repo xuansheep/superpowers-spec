@@ -4,7 +4,7 @@ import { ensureSpecTree } from './lib.mjs';
 const repoRoot = path.resolve(process.argv[2] ?? process.cwd());
 const created = await ensureSpecTree(repoRoot);
 
-console.log(`Initialized .agents/spec in ${repoRoot}`);
+console.log(`Initialized docs/project-spec in ${repoRoot}`);
 if (created.length === 0) {
   console.log('No new files were needed.');
 } else {

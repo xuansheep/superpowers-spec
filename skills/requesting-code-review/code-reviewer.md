@@ -157,7 +157,7 @@ git diff {BASE_SHA}..{HEAD_SHA}
 
 **Ready to merge: With fixes**
 
-**Spec context used:** .agents/spec/guides/index.md, .agents/spec/backend/index.md
+**Spec context used:** docs/project-spec/guides/index.md, docs/project-spec/backend/index.md
 
 **Reasoning:** Core implementation is solid with good architecture and tests. Important issues (help text, date validation) are easily fixed and do not affect core functionality.
 ```
