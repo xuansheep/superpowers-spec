@@ -14,7 +14,6 @@ Do not invent conventions. Read the repo, extract repeatable patterns, and write
 ## Behavior Contract
 
 - `spec-init` supports three modes: `initialize`, `overwrite`, and `update`.
-- `setup` remains available as a legacy alias, but new prompts and docs should use `spec-init`.
 - If `docs/project-spec` has no files yet, initialize directly.
 - If `docs/project-spec` already has files, ask whether to `overwrite` or `update`.
 - In `update` mode, do not create new files. Refresh only content under headings that already exist, and keep the result grounded in repository facts.
@@ -41,7 +40,6 @@ When `backend/` will be initialized or overwritten, ask which backend template t
 - Backfilling missing spec files after a partial or interrupted spec bootstrap
 - Refreshing existing spec files when repo reality has moved and you want the general entrypoint
 - Conservatively updating historical spec files without wiping human-authored conventions
-- Migrating older `setup` prompts to the formal `spec-init` name
 
 Use `spec-update` when the task is specifically to review and update existing spec files through the approval-first workflow.
 

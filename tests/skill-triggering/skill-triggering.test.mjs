@@ -8,7 +8,7 @@ const promptsDir = path.join(skillTriggeringDir, 'prompts');
 const runAllPath = path.join(skillTriggeringDir, 'run-all.sh');
 const runAllContent = await fs.readFile(runAllPath, 'utf8');
 
-for (const skill of ['reading-spec', 'spec-init', 'spec-update', 'setup']) {
+for (const skill of ['reading-spec', 'spec-init', 'spec-update']) {
   assert.match(runAllContent, new RegExp(`"${skill}"`), `${skill} should be listed in run-all.sh`);
 
   const promptPath = path.join(promptsDir, `${skill}.txt`);

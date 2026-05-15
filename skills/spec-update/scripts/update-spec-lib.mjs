@@ -6,7 +6,7 @@ import {updateMarkdownUsingExistingHeadings} from '../../spec-init/scripts/backe
 import {SPEC_TREE, collectRepoFacts, renderSpecFile, setupSpec} from '../../spec-init/scripts/lib.mjs';
 
 const execFileAsync = promisify(execFile);
-const SPEC_ROOT = path.join('.agents', 'spec');
+const SPEC_ROOT = path.join('docs', 'project-spec');
 const GIT_CANDIDATES = [
   process.env.GIT,
   'git.exe',

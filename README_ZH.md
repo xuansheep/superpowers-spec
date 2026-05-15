@@ -148,7 +148,7 @@ git clone https://github.com/xuansheep/superpowers-spec.git
 - 测试：`test-driven-development`
 - 调试：`systematic-debugging`、`verification-before-completion`
 - 协作：`brainstorming`、`writing-plans`、`executing-plans`、`dispatching-parallel-agents`、`requesting-code-review`、`receiving-code-review`、`using-git-worktrees`、`finishing-a-development-branch`、`subagent-driven-development`
-- Spec bootstrap：`spec-init`、`spec-update`、`setup`（旧别名）、`reading-spec`
+- Spec bootstrap：`spec-init`、`spec-update`、`reading-spec`
 - 元技能：`writing-skills`、`using-superpowers`
 - 自动学习：`automatic-learning` - 记录任务执行中的高价值复盘并更新长期记忆。
 

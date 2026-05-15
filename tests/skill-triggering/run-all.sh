@@ -17,7 +17,6 @@ SKILLS=(
     "reading-spec"
     "spec-init"
     "spec-update"
-    "setup"
 )
 
 echo "=== Running Skill Triggering Tests ==="

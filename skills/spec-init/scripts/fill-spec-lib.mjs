@@ -15,7 +15,7 @@ export async function askChoice(ask, write, title, options) {
 }
 
 export async function runSetupFlow(repoRoot, { ask, write = () => {} }) {
-  const specRoot = path.join(repoRoot, '.agents', 'spec');
+  const specRoot = path.join(repoRoot, 'docs', 'project-spec');
   const hasExistingSpec = await fs.access(specRoot).then(() => true).catch(() => false);
 
   let mode = 'initialize';
