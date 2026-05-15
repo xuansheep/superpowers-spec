@@ -43,7 +43,7 @@ https://github.com/obra/superpowers/blob/main/README.md
 
 ```text
 /plugin marketplace add xuansheep/superpowers-spec
-/plugin install superpowers@superpowers-dev
+/plugin install superpowers@superpowers-spec
 ```
 
 如果要对当前 fork 做本地开发或测试，可以让 Claude Code 直接使用这个仓库作为插件目录：
