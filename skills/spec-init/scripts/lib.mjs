@@ -26,7 +26,7 @@ const ROOT_SIGNAL_FILES = ['AGENTS.md', 'CLAUDE.md', 'GEMINI.md', 'README.md', '
 const FRONTEND_SIGNAL_FILES = ['skills/brainstorming/scripts/frame-template.html', 'skills/brainstorming/scripts/helper.js', 'skills/brainstorming/scripts/server.cjs', 'skills/brainstorming/visual-companion.md', 'tests/brainstorm-server/package.json',];
 const BACKEND_SIGNAL_FILES = ['hooks/session-start', 'hooks/run-hook.cmd', 'hooks/hooks.json', 'hooks/hooks-cursor.json', 'agents/code-reviewer.md', 'scripts/bump-version.sh', 'skills/brainstorming/scripts/server.cjs',];
 const GUIDE_SIGNAL_FILES = ['AGENTS.md', 'CLAUDE.md', 'README.md', 'skills/using-superpowers/SKILL.md', 'skills/writing-skills/SKILL.md', 'skills/executing-plans/SKILL.md', 'skills/requesting-code-review/SKILL.md',];
-const SPEC_ROOT = path.join('.agents', 'spec');
+const SPEC_ROOT = path.join('docs', 'project-spec');
 
 async function pathExists(targetPath) {
   try {

@@ -148,7 +148,7 @@ If installation is working, the agent should invoke the relevant skill workflow 
 - Testing: `test-driven-development`
 - Debugging: `systematic-debugging`, `verification-before-completion`
 - Collaboration: `brainstorming`, `writing-plans`, `executing-plans`, `dispatching-parallel-agents`, `requesting-code-review`, `receiving-code-review`, `using-git-worktrees`, `finishing-a-development-branch`, `subagent-driven-development`
-- Spec bootstrap: `spec-init`, `spec-update`, `setup` (legacy alias), `reading-spec`
+- Spec bootstrap: `spec-init`, `spec-update`, `reading-spec`
 - Meta: `writing-skills`, `using-superpowers`
 - Learning: `automatic-learning` - captures high-value task retrospectives and keeps long-term memory current.
 
