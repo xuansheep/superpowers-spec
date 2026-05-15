@@ -43,7 +43,7 @@ For normal Claude Code users, install the official Superpowers marketplace plugi
 
 ```text
 /plugin marketplace add xuansheep/superpowers-spec
-/plugin install superpowers@superpowers-spec
+/plugin install superpowers@superpowers-dec
 ```
 
 For local development or testing of this fork, run Claude Code with this repository as the plugin directory:
