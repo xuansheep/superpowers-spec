@@ -12,6 +12,10 @@ The plugin install name and skill namespace remain `superpowers` for compatibili
 Original upstream README:
 https://github.com/obra/superpowers/blob/main/README.md
 
+## Quickstart
+
+Give your agent Superpowers Spec through the harness you use: [Claude Code](#claude-code), [Codex CLI](#codex-cli), [Codex App](#codex-app), [Factory Droid](#factory-droid), [Gemini CLI](#gemini-cli), [OpenCode](#opencode), [Cursor](#cursor), or [GitHub Copilot CLI](#github-copilot-cli).
+
 ## What This Fork Is
 
 This fork keeps the core Superpowers idea: a coding agent should use composable skills and workflow guardrails to clarify intent, design first, write a concrete plan, implement in a structured way, and verify the result before claiming success.
@@ -64,12 +68,12 @@ Install this fork from the current repository:
 
 Cursor uses `.cursor-plugin/plugin.json`; the plugin name is kept as `superpowers` while the source repository remains this fork.
 
-### Codex
+### Codex CLI
 
 Tell Codex:
 
 ```text
-Fetch and follow instructions from https://github.com/xuansheep/superpowers-spec/blob/main/.codex/INSTALL.md
+Clone https://github.com/xuansheep/superpowers-spec.git to ~/.codex/superpowers and expose its skills directory through ~/.agents/skills/superpowers.
 ```
 
 Manual install:
@@ -87,7 +91,24 @@ New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.agents\skills"
 cmd /c mklink /J "$env:USERPROFILE\.agents\skills\superpowers" "$env:USERPROFILE\.codex\superpowers\skills"
 ```
 
+### Codex App
+
+Use the Codex app plugin UI if you have a local or marketplace entry for this fork. Keep the installed plugin name as `superpowers`; the repository source remains `https://github.com/xuansheep/superpowers-spec`.
+
+If the app only exposes the official Superpowers marketplace entry, install this fork manually for Codex CLI-style native skill discovery instead.
+
+### Factory Droid
+
+Register this fork as a marketplace source when your Droid environment supports Git marketplace installs:
+
+```bash
+droid plugin marketplace add https://github.com/xuansheep/superpowers-spec
+droid plugin install superpowers@superpowers-spec
+```
+
 ### OpenCode
+
+OpenCode uses its own plugin install; install this fork separately even if you already use it in another harness.
 
 Add this to the `plugin` array in `opencode.json`:
 
@@ -115,6 +136,15 @@ Update:
 
 ```bash
 gemini extensions update superpowers
+```
+
+### GitHub Copilot CLI
+
+Register this fork as a marketplace source when your Copilot CLI environment supports marketplace installs:
+
+```bash
+copilot plugin marketplace add xuansheep/superpowers-spec
+copilot plugin install superpowers@superpowers-spec
 ```
 
 ### Generic source install

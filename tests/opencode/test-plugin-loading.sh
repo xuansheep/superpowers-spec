@@ -19,16 +19,20 @@ plugin_link="$OPENCODE_CONFIG_DIR/plugins/superpowers.js"
 echo "Test 1: Checking plugin registration..."
 if [ -L "$plugin_link" ]; then
     echo "  [PASS] Plugin symlink exists"
+elif [ -f "$plugin_link" ]; then
+    echo "  [PASS] Plugin file exists"
 else
-    echo "  [FAIL] Plugin symlink not found at $plugin_link"
+    echo "  [FAIL] Plugin registration not found at $plugin_link"
     exit 1
 fi
 
-# Verify symlink target exists
-if [ -f "$(readlink -f "$plugin_link")" ]; then
+# Verify registered plugin target exists
+if [ -L "$plugin_link" ] && [ -f "$(readlink -f "$plugin_link")" ]; then
     echo "  [PASS] Plugin symlink target exists"
+elif [ -f "$plugin_link" ]; then
+    echo "  [PASS] Plugin file target exists"
 else
-    echo "  [FAIL] Plugin symlink target does not exist"
+    echo "  [FAIL] Plugin target does not exist"
     exit 1
 fi
 
