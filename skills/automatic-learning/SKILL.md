@@ -16,6 +16,7 @@ When this skill is triggered, follow these principles strictly:
 - **Only record high-value experience**: One-off mistakes, low-confidence guesses, or rare issues with no reuse value do not belong in long-term memory.
 - **Sensitive information must not be persisted**: Never record secrets, tokens, credentials, customer private data, or full sensitive paths.
 - **Do not fabricate status**: If historical files or long-term memory fail to write, clearly state the failure reason and what remains unfinished.
+- **Plan Mode is read-only context**: In Plan Mode, memory may be read for context. Only issues that occur or are revalidated during execution work may be considered for retrospective writing.
 
 ## 2. Subagent Enablement Rules
 
@@ -26,6 +27,8 @@ Subagents may be used only when the current session explicitly allows them. Any 
 - The current runtime tools allow `spawn_agent` for this kind of task.
 
 If none of the above applies, the main agent must not call `spawn_agent`.
+
+If a retrospective is needed but delegation permission was not asked, was not answered, is ambiguous, or was explicitly refused, do not stop the task just to negotiate delegation. Treat subagents as unavailable for that retrospective and have the main agent write the automatic-learning content when writing is allowed.
 
 ### 2.1 Asynchronous Delegation Rules
 
@@ -81,10 +84,10 @@ Cases that do not need a retrospective:
 
 Cases that do need a retrospective:
 
-- Commands failed because of permissions, dependencies, paths, network, encoding, file locks, or sandbox limits.
-- A reusable correct command pattern, prerequisite, or fallback was discovered.
-- The long-term memory file was unreadable, corrupted, encoded incorrectly, or conflicted with reality.
-- Repeated attempts produced a stable, verifiable troubleshooting pattern.
+- Commands failed because of permissions, dependencies, paths, network, encoding, file locks, or sandbox limits during execution work.
+- A reusable correct command pattern, prerequisite, or fallback was discovered during execution work.
+- The long-term memory file was unreadable, corrupted, encoded incorrectly, or conflicted with reality during execution work.
+- Repeated execution attempts produced a stable, verifiable troubleshooting pattern.
 
 ### 3.4 Retrospective Handling
 
@@ -201,9 +204,9 @@ If there is high-value experience, report it in descending value order:
 - **Prevention Signal**: Early warning signs and prerequisites that must be checked.
 - **Reuse When**: Future scenarios, repositories, or environments where this applies.
 - **Confidence**: high / medium / low.
-- **Delegation**: Delegated to a subagent asynchronously; completion was not awaited.
+- **Handling**: State whether the retrospective was written by the main agent or delegated to a subagent asynchronously.
 - **History Target**: `docs/automatic/learning/history/yyyyMMddHHmmss.md`.
-- **Next Check**: If you need to confirm the write, ask later to check the subagent result.
+- **Next Check**: If delegated and not awaited, ask later to check the subagent result.
 ```
 
 ## 9. Decision Table
@@ -212,10 +215,10 @@ If there is high-value experience, report it in descending value order:
 |---|---|---|
 | No failure, no troubleshooting value | Report no high-value experience | Do not create |
 | Failure exists but no reusable value | Explain briefly, do not write long-term memory | Do not create |
-| High-value experience exists and subagents are allowed | Summarize context and delegate | Write history and update memory |
-| High-value experience exists but subagents are not allowed | Explain why and give a retrospective recommendation | Do not create |
+| High-value execution experience exists and subagents are allowed | Summarize context and delegate | Write history and update memory |
+| High-value execution experience exists but delegation was not asked, unanswered, ambiguous, refused, or unavailable | Main agent writes history and updates memory when writing is allowed | Do not create |
 | memory.md does not exist | Create or delegate creation when writing is allowed | Handle according to permission |
-| memory.md is garbled or unreadable | Degrade to no usable memory and record the issue | Repair or recreate when authorized |
+| memory.md is garbled or unreadable during execution work | Degrade to no usable memory and record the issue | Repair or recreate when authorized |
 | History write fails | Report failure, do not claim success | Report the failing stage and cause |
 | Long-term memory conflicts | Trust the current verified facts | Replace the old rule and avoid keeping both |
 
