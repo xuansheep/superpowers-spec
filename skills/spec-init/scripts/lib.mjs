@@ -22,9 +22,9 @@ export const SPEC_TREE = {
     title: 'Code Reuse Thinking Guide'
   },],
 };
-const ROOT_SIGNAL_FILES = ['AGENTS.md', 'CLAUDE.md', 'GEMINI.md', 'README.md', 'docs/README.codex.md', 'hooks/session-start', 'hooks/run-hook.cmd', 'hooks/hooks.json', 'hooks/hooks-cursor.json', 'agents/code-reviewer.md', 'skills/using-superpowers/SKILL.md', 'skills/writing-skills/SKILL.md', 'skills/brainstorming/SKILL.md', 'skills/brainstorming/scripts/server.cjs', 'skills/brainstorming/scripts/helper.js', 'skills/brainstorming/scripts/frame-template.html', 'tests/skill-triggering/run-test.sh', 'tests/brainstorm-server/package.json', 'scripts/bump-version.sh',];
+const ROOT_SIGNAL_FILES = ['AGENTS.md', 'CLAUDE.md', 'GEMINI.md', 'README.md', 'README_ZH.md', '.codex-plugin/plugin.json', 'hooks/session-start', 'hooks/run-hook.cmd', 'hooks/hooks.json', 'hooks/hooks-cursor.json', 'skills/requesting-code-review/code-reviewer.md', 'skills/using-superpowers/SKILL.md', 'skills/writing-skills/SKILL.md', 'skills/brainstorming/SKILL.md', 'skills/brainstorming/scripts/server.cjs', 'skills/brainstorming/scripts/helper.js', 'skills/brainstorming/scripts/frame-template.html', 'tests/skill-triggering/run-test.sh', 'tests/brainstorm-server/package.json', 'scripts/bump-version.sh',];
 const FRONTEND_SIGNAL_FILES = ['skills/brainstorming/scripts/frame-template.html', 'skills/brainstorming/scripts/helper.js', 'skills/brainstorming/scripts/server.cjs', 'skills/brainstorming/visual-companion.md', 'tests/brainstorm-server/package.json',];
-const BACKEND_SIGNAL_FILES = ['hooks/session-start', 'hooks/run-hook.cmd', 'hooks/hooks.json', 'hooks/hooks-cursor.json', 'agents/code-reviewer.md', 'scripts/bump-version.sh', 'skills/brainstorming/scripts/server.cjs',];
+const BACKEND_SIGNAL_FILES = ['hooks/session-start', 'hooks/run-hook.cmd', 'hooks/hooks.json', 'hooks/hooks-cursor.json', 'skills/requesting-code-review/code-reviewer.md', 'scripts/bump-version.sh', 'skills/brainstorming/scripts/server.cjs',];
 const GUIDE_SIGNAL_FILES = ['AGENTS.md', 'CLAUDE.md', 'README.md', 'skills/using-superpowers/SKILL.md', 'skills/writing-skills/SKILL.md', 'skills/executing-plans/SKILL.md', 'skills/requesting-code-review/SKILL.md',];
 const SPEC_ROOT = path.join('docs', 'project-spec');
 

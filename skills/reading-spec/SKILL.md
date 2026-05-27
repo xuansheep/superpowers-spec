@@ -1,6 +1,6 @@
 ---
 name: reading-spec
-description: Use when a workflow needs repository-specific rules from docs/project-spec before planning, implementation, or review.
+description: Use when planning, implementing, reviewing, or any other situation where repository-specific project specs may be needed.
 ---
 
 # Reading Spec

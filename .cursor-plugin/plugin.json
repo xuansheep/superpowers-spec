@@ -1,8 +1,8 @@
 {
   "name": "superpowers",
-  "displayName": "superpowers",
-  "description": "Core skills library: TDD, debugging, collaboration patterns, and proven techniques for the superpowers fork",
-  "version": "5.0.7",
+  "displayName": "Superpowers",
+  "description": "Core skills library: TDD, debugging, collaboration patterns, and proven techniques for the superpowers-spec fork",
+  "version": "5.1.0",
   "author": {
     "name": "xuansheep",
     "email": "xuansheep@gmail.com"

@@ -69,7 +69,7 @@ Cursor 使用 `.cursor-plugin/plugin.json`；插件名仍然保持为 `superpowe
 告诉 Codex：
 
 ```text
-Fetch and follow instructions from https://github.com/xuansheep/superpowers-spec/blob/main/.codex/INSTALL.md
+将 https://github.com/xuansheep/superpowers-spec.git 克隆到 ~/.codex/superpowers，并通过 ~/.agents/skills/superpowers 暴露其中的 skills 目录。
 ```
 
 手动安装：
@@ -85,6 +85,17 @@ Windows（PowerShell）：
 ```powershell
 New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.agents\skills"
 cmd /c mklink /J "$env:USERPROFILE\.agents\skills\superpowers" "$env:USERPROFILE\.codex\superpowers\skills"
+```
+
+### Codex App
+
+如果 Codex App 支持本地或 marketplace 插件入口，请将当前 fork 作为 `superpowers` 插件来源安装；源码仓库仍为 `https://github.com/xuansheep/superpowers-spec`。
+
+### Factory Droid
+
+```bash
+droid plugin marketplace add https://github.com/xuansheep/superpowers-spec
+droid plugin install superpowers@superpowers-spec
 ```
 
 ### OpenCode
@@ -115,6 +126,13 @@ gemini extensions install https://github.com/xuansheep/superpowers-spec
 
 ```bash
 gemini extensions update superpowers
+```
+
+### GitHub Copilot CLI
+
+```bash
+copilot plugin marketplace add xuansheep/superpowers-spec
+copilot plugin install superpowers@superpowers-spec
 ```
 
 ### 通用源码安装方式

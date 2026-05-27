@@ -77,6 +77,6 @@ After all tasks complete and verified:
 
 **Required workflow skills:**
 - **superpowers:reading-spec** - Load repository-specific rules before plan review.
-- **superpowers:using-git-worktrees** - REQUIRED: Set up isolated workspace before starting.
+- **superpowers:using-git-worktrees** - Ensures isolated workspace (creates one or verifies existing).
 - **superpowers:writing-plans** - Creates the plan this skill executes.
 - **superpowers:finishing-a-development-branch** - Complete development after all tasks.
