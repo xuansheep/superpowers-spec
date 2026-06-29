@@ -1,6 +1,6 @@
 ---
 name: spec-update
-description: Use when a repository already has docs/project-spec files and those existing spec files need a conservative update plan from repository evidence and committed git changes before any approved spec update is applied.
+description: "Use when an approved brainstorming workflow allows non-brainstorming skills and a repository already has docs/project-spec files and those existing spec files need a conservative update plan from repository evidence and committed git changes before any approved spec update is applied."
 ---
 
 # Plan Existing Project Spec Updates

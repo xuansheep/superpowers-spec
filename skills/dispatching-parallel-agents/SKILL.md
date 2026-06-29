@@ -1,6 +1,6 @@
 ---
 name: dispatching-parallel-agents
-description: Use when facing 2+ independent tasks that can be worked on without shared state or sequential dependencies
+description: "Use when an approved brainstorming workflow allows non-brainstorming skills and facing 2+ independent tasks that can be worked on without shared state or sequential dependencies"
 ---
 
 # Dispatching Parallel Agents

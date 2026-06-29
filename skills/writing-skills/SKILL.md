@@ -1,6 +1,6 @@
 ---
 name: writing-skills
-description: Use when creating new skills, editing existing skills, or verifying skills work before deployment
+description: "Use when an approved brainstorming workflow allows non-brainstorming skills and creating new skills, editing existing skills, or verifying skills work before deployment"
 ---
 
 # Writing Skills

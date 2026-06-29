@@ -147,19 +147,25 @@ git clone https://github.com/xuansheep/superpowers-spec.git
 
 ## 验证安装
 
-启动一个新会话，然后让 agent 处理一个应当触发 workflow 的任务，例如规划功能、系统化排查问题，或者在实现前先读取 spec。
+启动一个新会话，然后明确要求 agent 使用 `brainstorming`，例如：
 
-如果安装正常，agent 应该会调用相关的 skill workflow，而不是直接跳进无结构的代码修改。
+```text
+please use the brainstorming skill to help me think through this feature
+```
+
+如果安装正常，agent 应该会调用 `brainstorming`。普通实现、调试、评审或 spec 请求在 brainstorming 设计获批并进入计划或实现阶段前，不应触发其他技能。
 
 ## 基本工作流
+
+默认情况下 skill gate 关闭。用户必须显式从 `brainstorming` 开始；设计获批后，其余 workflow 技能才可按需触发。
 
 1. `brainstorming`
 2. `using-git-worktrees`
 3. `writing-plans`
 4. `subagent-driven-development` 或 `executing-plans`
-5. `test-driven-development`
-6. `requesting-code-review`
-7. `finishing-a-development-branch`
+   - 两个执行技能都会先加载 `test-driven-development`，再读取项目规则或开始实现
+5. `requesting-code-review`
+6. `finishing-a-development-branch`
 
 ## 主要技能
 

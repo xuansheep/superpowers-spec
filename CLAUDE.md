@@ -68,20 +68,20 @@ PRs containing multiple unrelated changes will be closed. Split them into separa
 
 If your PR adds support for a new harness (IDE, CLI tool, agent runner), you MUST include a session transcript proving the integration works end-to-end.
 
-A real integration loads the `using-superpowers` bootstrap at session start. The bootstrap is what causes skills to auto-trigger at the right moments. Without it, the skills are dead weight — present on disk but never invoked.
+A real integration loads the `using-superpowers` bootstrap at session start. The bootstrap enforces the skill gate: only an explicit `brainstorming` request may start the workflow, and all other skills remain closed until the brainstorming design is approved. Without the bootstrap, the skills are dead weight — present on disk but never invoked.
 
 **The acceptance test.** Open a clean session in the new harness and send exactly this user message:
 
-> Let's make a react todo list
+> please use the brainstorming skill to help me think through this feature
 
-A working integration auto-triggers the `brainstorming` skill before any code is written. Paste the complete transcript in the PR.
+A working integration invokes the `brainstorming` skill before any code is written. Paste the complete transcript in the PR. Also verify that a plain request such as `Let's make a react todo list` does not invoke any non-brainstorming skill while the gate is closed.
 
 **These are not real integrations and will be closed:**
 
 - Manually copying skill files into the harness
 - Wrapping with `npx skills` or similar at-runtime shims
-- Anything that requires the user to opt in to skills per-session
-- Anything where `brainstorming` does not auto-trigger on the acceptance test above
+- Anything where explicit `brainstorming` does not trigger on the acceptance test above
+- Anything where non-brainstorming skills can trigger before an approved brainstorming workflow opens the gate
 
 If you are not sure whether your integration loads the bootstrap at session start, it does not.
 

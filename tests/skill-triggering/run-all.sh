@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Run all skill triggering tests
+# Run all skill gate tests
 # Usage: ./run-all.sh
 
 set -e
@@ -7,7 +7,7 @@ set -e
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROMPTS_DIR="$SCRIPT_DIR/prompts"
 
-SKILLS=(
+GATED_SKILLS=(
     "systematic-debugging"
     "test-driven-development"
     "writing-plans"
@@ -19,29 +19,29 @@ SKILLS=(
     "spec-update"
 )
 
-echo "=== Running Skill Triggering Tests ==="
+echo "=== Running Skill Gate Tests ==="
 echo ""
 
 PASSED=0
 FAILED=0
 RESULTS=()
 
-for skill in "${SKILLS[@]}"; do
+for skill in "${GATED_SKILLS[@]}"; do
     prompt_file="$PROMPTS_DIR/${skill}.txt"
 
     if [ ! -f "$prompt_file" ]; then
-        echo "⚠️  SKIP: No prompt file for $skill"
+        echo "SKIP: No prompt file for $skill"
         continue
     fi
 
-    echo "Testing: $skill"
+    echo "Testing closed gate: $skill"
 
-    if "$SCRIPT_DIR/run-test.sh" "$skill" "$prompt_file" 3 2>&1 | tee /tmp/skill-test-$skill.log; then
+    if "$SCRIPT_DIR/run-negative-test.sh" "$skill" "$prompt_file" 3 2>&1 | tee /tmp/skill-test-$skill-gated.log; then
         PASSED=$((PASSED + 1))
-        RESULTS+=("✅ $skill")
+        RESULTS+=("PASS: $skill gated")
     else
         FAILED=$((FAILED + 1))
-        RESULTS+=("❌ $skill")
+        RESULTS+=("FAIL: $skill gated")
     fi
 
     echo ""
@@ -49,13 +49,26 @@ for skill in "${SKILLS[@]}"; do
     echo ""
 done
 
-echo "Testing: brainstorming-not-explicit"
+echo "Testing closed gate: brainstorming-not-explicit"
 if "$SCRIPT_DIR/run-negative-test.sh" "brainstorming" "$PROMPTS_DIR/brainstorming-implicit.txt" 3 2>&1 | tee /tmp/skill-test-brainstorming-negative.log; then
     PASSED=$((PASSED + 1))
-    RESULTS+=("✅ brainstorming-not-explicit")
+    RESULTS+=("PASS: brainstorming-not-explicit")
 else
     FAILED=$((FAILED + 1))
-    RESULTS+=("❌ brainstorming-not-explicit")
+    RESULTS+=("FAIL: brainstorming-not-explicit")
+fi
+
+echo ""
+echo "---"
+echo ""
+
+echo "Testing explicit request: brainstorming"
+if "$SCRIPT_DIR/run-test.sh" "brainstorming" "$SCRIPT_DIR/../explicit-skill-requests/prompts/please-use-brainstorming.txt" 3 2>&1 | tee /tmp/skill-test-brainstorming-explicit.log; then
+    PASSED=$((PASSED + 1))
+    RESULTS+=("PASS: brainstorming-explicit")
+else
+    FAILED=$((FAILED + 1))
+    RESULTS+=("FAIL: brainstorming-explicit")
 fi
 
 echo ""
