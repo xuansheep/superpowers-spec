@@ -1,6 +1,6 @@
 ---
 name: spec-init
-description: Use when initializing or conservatively refreshing project-specific spec documents under docs/project-spec from the current repository''s real conventions, structure, and code examples.
+description: "Use when an approved brainstorming workflow allows non-brainstorming skills and initializing or conservatively refreshing project-specific spec documents under docs/project-spec from the current repository''s real conventions, structure, and code examples."
 ---
 
 # Initialize Project Specs

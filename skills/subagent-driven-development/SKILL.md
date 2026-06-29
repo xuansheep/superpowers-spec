@@ -1,6 +1,6 @@
 ---
 name: subagent-driven-development
-description: Use when executing implementation plans with independent tasks in the current session
+description: "Use when an approved brainstorming workflow allows non-brainstorming skills and executing implementation plans with independent tasks in the current session"
 ---
 
 # Subagent-Driven Development
@@ -9,7 +9,7 @@ Execute plan by dispatching fresh subagent per task, with two-stage review after
 
 **Why subagents:** You delegate tasks to specialized agents with isolated context. By precisely crafting their instructions and context, you ensure they stay focused and succeed at their task. They should never inherit your session's context or history - you construct exactly what they need. This also preserves your own context for coordination work.
 
-**Core principle:** Fresh subagent per task + project rules loaded first + two-stage review (spec then quality) = high quality, fast iteration
+**Core principle:** TDD discipline loaded first + fresh subagent per task + project rules loaded before dispatch + two-stage review (spec then quality) = high quality, fast iteration
 
 **Continuous execution:** Do not pause to check in with your human partner between tasks. Execute all tasks from the plan without stopping. The only reasons to stop are: BLOCKED status you cannot resolve, ambiguity that genuinely prevents progress, or all tasks complete. "Should I continue?" prompts and progress summaries waste their time - they asked you to execute the plan, so execute it.
 
@@ -41,6 +41,15 @@ digraph when_to_use {
 
 ## The Process
 
+### Step 1: Load TDD Discipline
+1. **REQUIRED SUB-SKILL:** Use superpowers:test-driven-development.
+2. Carry the TDD requirements into every implementer prompt and review.
+3. No implementer may write production code before a failing test has been written and verified.
+
+### Step 2: Load Project Rules
+1. **REQUIRED SUB-SKILL:** Use superpowers:reading-spec.
+2. Carry forward `PROJECT_SPEC_INDEXES_FOUND` and `PROJECT_RULES_SUMMARY` into task dispatch and review.
+
 ```dot
 digraph process {
     rankdir=TB;
@@ -60,12 +69,14 @@ digraph process {
         "Mark task complete in TodoWrite" [shape=box];
     }
 
+    "Load TDD discipline with superpowers:test-driven-development" [shape=box];
     "Load project rules with superpowers:reading-spec" [shape=box];
     "Read plan, extract all tasks with full text, note context, create TodoWrite" [shape=box];
     "More tasks remain?" [shape=diamond];
     "Dispatch final code reviewer subagent for entire implementation" [shape=box];
     "Use superpowers:finishing-a-development-branch" [shape=box style=filled fillcolor=lightgreen];
 
+    "Load TDD discipline with superpowers:test-driven-development" -> "Load project rules with superpowers:reading-spec";
     "Load project rules with superpowers:reading-spec" -> "Read plan, extract all tasks with full text, note context, create TodoWrite";
     "Read plan, extract all tasks with full text, note context, create TodoWrite" -> "Dispatch implementer subagent (./implementer-prompt.md)";
     "Dispatch implementer subagent (./implementer-prompt.md)" -> "Implementer subagent asks questions?";
@@ -132,6 +143,8 @@ Implementer subagents report one of four statuses. Handle each appropriately:
 ```
 You: I'm using Subagent-Driven Development to execute this plan.
 
+[Use superpowers:test-driven-development]
+
 [Use superpowers:reading-spec]
   PROJECT_SPEC_INDEXES_FOUND:
     - docs/project-spec/guides/index.md
@@ -180,7 +193,7 @@ Done!
 ## Advantages
 
 **vs. Manual execution:**
-- Subagents follow TDD naturally
+- Subagents receive explicit TDD requirements before implementation
 - Fresh context per task (no confusion)
 - Parallel-safe (subagents don't interfere)
 - Subagent can ask questions (before AND during work)
@@ -197,6 +210,7 @@ Done!
 - Questions surfaced before work begins (not after)
 
 **Quality gates:**
+- TDD skill loaded before project rules or implementation
 - Project rules loaded once, reused across all tasks
 - Self-review catches issues before handoff
 - Two-stage review: spec compliance, then code quality
@@ -213,6 +227,7 @@ Done!
 ## Red Flags
 
 **Never:**
+- Skip loading TDD before loading project rules or dispatching subagents
 - Start implementation on main/master branch without explicit user consent
 - Skip loading project rules before dispatching subagents
 - Skip reviews (spec compliance OR code quality)
@@ -245,14 +260,12 @@ Done!
 ## Integration
 
 **Required workflow skills:**
+- **superpowers:test-driven-development** - Load TDD requirements before reading project rules, extracting tasks, or dispatching subagents
 - **superpowers:reading-spec** - Load repository-specific rules before extracting tasks and dispatching subagents
 - **superpowers:using-git-worktrees** - Ensures isolated workspace (creates one or verifies existing)
 - **superpowers:writing-plans** - Creates the plan this skill executes
 - **superpowers:requesting-code-review** - Code review template for reviewer subagents
 - **superpowers:finishing-a-development-branch** - Complete development after all tasks
-
-**Subagents should use:**
-- **superpowers:test-driven-development** - Subagents follow TDD for each task
 
 **Alternative workflow:**
 - **superpowers:executing-plans** - Use for parallel session instead of same-session execution

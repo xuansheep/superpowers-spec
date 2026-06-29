@@ -1,6 +1,6 @@
 ---
 name: automatic-learning
-description: Use when carrying out multi-step implementation, debugging, testing, environment setup, or integration troubleshooting tasks that surface repeated failures, permission limits, missing dependencies, path mistakes, encoding issues, or unreliable file writes.
+description: "Use when an approved brainstorming workflow allows non-brainstorming skills and carrying out multi-step implementation, debugging, testing, environment setup, or integration troubleshooting tasks that surface repeated failures, permission limits, missing dependencies, path mistakes, encoding issues, or unreliable file writes."
 ---
 
 # Automatic Learning

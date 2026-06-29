@@ -24,6 +24,14 @@ Task tool (general-purpose):
 
     [PROJECT_RULES_SUMMARY]
 
+    ## TDD Discipline
+
+    You must follow superpowers:test-driven-development for this task:
+    - Write a failing test before production code.
+    - Run the test and verify it fails for the expected reason.
+    - Write the minimal production code to pass.
+    - Run the test again and verify it passes.
+
     ## Before You Begin
 
     If you have questions about:
@@ -40,7 +48,7 @@ Task tool (general-purpose):
     Once you're clear on requirements:
     1. Implement exactly what the task specifies
     2. Follow the project rules summary while implementing
-    3. Write tests (following TDD if task says to)
+    3. Follow TDD: write and verify the failing test before production code
     4. Verify implementation works
     5. Commit your work
     6. Self-review (see below)
@@ -106,7 +114,7 @@ Task tool (general-purpose):
 
     **Testing:**
     - Do tests actually verify behavior (not just mock behavior)?
-    - Did I follow TDD if required?
+    - Did I follow TDD before writing production code?
     - Are tests comprehensive?
 
     If you find issues during self-review, fix them now before reporting.
@@ -117,6 +125,7 @@ Task tool (general-purpose):
     - **Status:** DONE | DONE_WITH_CONCERNS | BLOCKED | NEEDS_CONTEXT
     - What you implemented (or what you attempted, if blocked)
     - What you tested and test results
+    - TDD evidence: RED command and expected failure, then GREEN command and passing result
     - Files changed
     - Self-review findings (if any)
     - Any issues or concerns

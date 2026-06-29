@@ -1,6 +1,6 @@
 ---
 name: writing-plans
-description: Use when you have a spec or requirements for a multi-step task, before touching code
+description: "Use when an approved brainstorming workflow allows non-brainstorming skills and you have a spec or requirements for a multi-step task, before touching code"
 ---
 
 # Writing Plans
@@ -145,8 +145,10 @@ After saving the plan, offer execution choice:
 
 **If Subagent-Driven chosen:**
 - **REQUIRED SUB-SKILL:** Use superpowers:subagent-driven-development
+- That skill loads superpowers:test-driven-development before project rules or implementation
 - Fresh subagent per task + two-stage review
 
 **If Inline Execution chosen:**
 - **REQUIRED SUB-SKILL:** Use superpowers:executing-plans
+- That skill loads superpowers:test-driven-development before project rules or implementation
 - Batch execution with checkpoints for review

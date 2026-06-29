@@ -159,19 +159,25 @@ Use `superpowers` as the plugin or skills namespace unless your platform require
 
 ## Verify Installation
 
-Start a new session and ask the agent to perform something that should trigger a workflow, such as planning a feature, debugging an issue systematically, or reading specs before implementation.
+Start a new session and explicitly ask the agent to use `brainstorming`, for example:
 
-If installation is working, the agent should invoke the relevant skill workflow instead of jumping straight into unstructured code changes.
+```text
+please use the brainstorming skill to help me think through this feature
+```
+
+If installation is working, the agent should invoke `brainstorming`. Plain implementation, debugging, review, or spec requests should not trigger other skills until the brainstorming design is approved and the workflow transitions to planning or implementation.
 
 ## Workflow Overview
+
+The skill gate is closed by default. The user must explicitly start with `brainstorming`; after the design is approved, the remaining workflow skills may trigger as needed.
 
 1. `brainstorming`
 2. `using-git-worktrees`
 3. `writing-plans`
 4. `subagent-driven-development` or `executing-plans`
-5. `test-driven-development`
-6. `requesting-code-review`
-7. `finishing-a-development-branch`
+   - both execution skills load `test-driven-development` before project rules or implementation
+5. `requesting-code-review`
+6. `finishing-a-development-branch`
 
 ## Key Skills
 

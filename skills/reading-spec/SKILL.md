@@ -1,6 +1,6 @@
 ---
 name: reading-spec
-description: Use when planning, implementing, reviewing, or any other situation where repository-specific project specs may be needed.
+description: "Use when an approved brainstorming workflow allows non-brainstorming skills and planning, implementing, reviewing, or any other situation where repository-specific project specs may be needed."
 ---
 
 # Reading Spec

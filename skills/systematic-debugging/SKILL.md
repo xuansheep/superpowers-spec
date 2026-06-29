@@ -1,6 +1,6 @@
 ---
 name: systematic-debugging
-description: Use when encountering any bug, test failure, or unexpected behavior, before proposing fixes
+description: "Use when an approved brainstorming workflow allows non-brainstorming skills and encountering any bug, test failure, or unexpected behavior, before proposing fixes"
 ---
 
 # Systematic Debugging
